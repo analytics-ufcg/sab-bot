@@ -1,8 +1,6 @@
 module.exports = {
-  dev: {
-    port : 9013
-  },
-  prod: {
-    port: 5002
+  port: 5002,
+  fb : {
+    validation_token : 'meudeuduceuberg'
   }
 }
