@@ -7,7 +7,7 @@ exports.receivedMessage = function(event) {
     timeOfMessage = event.timestamp,
     message = event.message;
 
-  sendTextMessage(senderID, response);
+  sendTextMessage(senderID, "Echo");
 }
 
 function sendTextMessage(recipientId, messageText) {
