@@ -1,5 +1,5 @@
 module.exports = {
-  port: 5002,
+  port: process.env.PORT || 5002,
   fb : {
     validation_token : 'meudeuduceuberg'
   }
