@@ -28,7 +28,7 @@ function sendTextMessage(recipientId, messageText) {
 function callSendAPI(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN },
+    qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
     method: 'POST',
     json: messageData
   }, function (error, response, body) {
