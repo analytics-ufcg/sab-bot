@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/analytics-ufcg/sab-bot#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.78.0"
   }
 }
