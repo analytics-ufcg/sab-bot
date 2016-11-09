@@ -19,7 +19,7 @@ exports.receivedMessage = function(event) {
   processText(senderID, message);
 }
 
-exports.recievedPostback = function(event) {
+exports.receivedPostback = function(event) {
   var
     senderID = event.sender.id,
     recipientID = event.recipient.id,
