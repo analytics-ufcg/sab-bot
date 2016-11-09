@@ -2,8 +2,7 @@
 
 const
   express = require('express'),
-  bodyParser = require('body-parser'),
-  request = require('request');
+  bodyParser = require('body-parser');
 
 var app = express();
 app.set('view engine', 'ejs');
