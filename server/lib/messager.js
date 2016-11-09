@@ -1,5 +1,7 @@
 'use strict'
 
+const request = require('request');
+
 exports.receivedMessage = function(event) {
   var
     senderID = event.sender.id,
