@@ -13,7 +13,7 @@ exports.receivedMessage = function(event) {
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
-      processQuickReply(message.quick_reply);
+      processQuickReply(senderID, message.quick_reply);
     }
   }
   processText(senderID, message);
@@ -26,6 +26,9 @@ exports.receivedPostback = function(event) {
     timeOfPostback = event.timestamp,
     payload = event.postback.payload;
 
+  console.log("[sender]:"+event.sender.id);
+  console.log("[recipient]:"+event.recipient.id);
+
   if (payload === "GET_STARTED_PAYLOAD"){
     sendStartQuickReply(senderID);
   }
@@ -36,19 +39,19 @@ function processText(senderID, message) {
   //getMatch(senderID, message);
 }
 
-function processQuickReply(quickReply) {
+function processQuickReply(recipientId, quickReply) {
   switch (quickReply.payload) {
     case 'STATUS_PAYLOAD':
-      sendTextMessage(senderID, "Qual o nome do reservatório?");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?");
       break;
     case 'SING_UP_PAYLOAD':
-      sendTextMessage(senderID, "Qual reservatório você deseja receber atualizações diárias?")
+      sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
       break;
     default:
-      sendTextMessage(senderID, "Ajuda tarda mas não falha.");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
-  sendTypingOff(senderID);
+  sendTypingOff(recipientId);
 }
 
 function sendTextMessage(recipientId, messageText) {
