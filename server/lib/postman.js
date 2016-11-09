@@ -10,6 +10,7 @@ exports.receivedMessage = function(event) {
     message = event.message;
 
   if (message.quick_reply) {
+    console.log("Is quick reply %s. Pauload: %s", messageId, message.quick_reply.payload);
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
@@ -26,9 +27,6 @@ exports.receivedPostback = function(event) {
     timeOfPostback = event.timestamp,
     payload = event.postback.payload;
 
-  console.log("[sender]:"+event.sender.id);
-  console.log("[recipient]:"+event.recipient.id);
-
   if (payload === "GET_STARTED_PAYLOAD"){
     sendStartQuickReply(senderID);
   }
@@ -44,7 +42,7 @@ function processQuickReply(recipientId, quickReply) {
     case 'STATUS_PAYLOAD':
       sendTextMessage(recipientId, "Qual o nome do reservatório?");
       break;
-    case 'SING_UP_PAYLOAD':
+    case 'SIGN_UP_PAYLOAD':
       sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
       break;
     default:
