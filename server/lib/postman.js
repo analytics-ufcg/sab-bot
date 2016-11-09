@@ -13,13 +13,16 @@ exports.receivedMessage = function(event) {
   if (message.is_echo) {
     return;
   } else if (message.quick_reply) {
+    console.log("Is quick reply Pauload: %s", message.quick_reply.payload);
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
       processQuickReply(senderID, message.quick_reply);
+      return;
     }
   }
   processText(senderID, message);
+  return;
 }
 
 exports.receivedPostback = function(event) {
