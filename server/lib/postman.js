@@ -13,7 +13,6 @@ exports.receivedMessage = function(event) {
   if (message.is_echo) {
     return;
   } else if (message.quick_reply) {
-    console.log("Is quick reply %s. Pauload: %s", messageId, message.quick_reply.payload);
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
