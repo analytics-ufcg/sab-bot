@@ -9,6 +9,8 @@ exports.receivedMessage = function(event) {
     timeOfMessage = event.timestamp,
     message = event.message;
 
+  console.log(message);
+
   if (message.quick_reply) {
     console.log("Is quick reply %s. Pauload: %s", messageId, message.quick_reply.payload);
     var quickReplyPayload = message.quick_reply.payload;
