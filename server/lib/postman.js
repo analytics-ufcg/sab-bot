@@ -42,7 +42,7 @@ function processText(senderID, message) {
 }
 
 function processQuickReply(recipientId, quickReply) {
-  sendTypingOn(senderID);
+  sendTypingOn(recipientId);
   switch (quickReply.payload) {
     case 'STATUS_PAYLOAD':
       sendTextMessage(recipientId, "Qual o nome do reservatório?");
