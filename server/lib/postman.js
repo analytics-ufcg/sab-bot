@@ -1,6 +1,9 @@
 'use strict'
 
-const request = require('request');
+const
+  request = require('request'),
+  config = require('./../config/config');
+
 
 exports.receivedMessage = function(event) {
   var
@@ -32,13 +35,82 @@ exports.receivedPostback = function(event) {
     payload = event.postback.payload;
 
   if (payload === "GET_STARTED_PAYLOAD"){
-    sendStartQuickReply(senderID);
+    sendQuickReply(senderID, "Como posso ajudá-lo?");
   }
 }
 
+function getReservatMessage(reservat) {
+  return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade;
+}
+
 function processText(senderID, message) {
-  sendTextMessage(senderID, "Echo: " + message.text);
-  //getMatch(senderID, message);
+  sendTypingOn(senderID);
+  getMatch(message, function success(info) {
+    var length = info.length;
+    if (!length) {
+      sendTypingOff(senderID);
+      sendQuickReply(senderID, "Não entendi. Seria isso?");
+    } else if (length === 1) {
+      getInfo(info[0].id, function(reservat) {
+        sendTypingOff(senderID);
+        sendTextMessage(recipientId, getReservatMessage(reservat));
+      });
+    } else {
+      var options = [];
+      var optionsMessage = "Você quis dizer um desses?\n\n";
+      for (var i = 0; i < info.length; i++) {
+        optionsMessage += i+1 + '. ' + info[i].reservat + " - " + info[i].uf + "\n";
+        options.push({
+            "content_type": "text",
+            "title": i+1,
+            "payload": info[i].id
+          })
+      }
+      var messageData = {
+        recipient: {
+          id: senderID
+        },
+        message: {
+          text: optionsMessage,
+          quick_replies: options
+        }
+      };
+      sendTypingOff(senderID);
+      callSendAPI(messageData);
+    }
+    return;
+  }, function error() {
+    sendTextMessage(senderID, "Estou indisponível no momento! :/");
+    sendTypingOff(senderID);
+    return;
+  });
+}
+
+function getMatch(message, successCallback, errorCallback) {
+  request({
+    url: config.api + 'reservatorios/similares/' + message.text + '/70',
+    json: true
+  },function(error, response, body) {
+    if (error || response.status !== 200) {
+      errorCallback();
+      return;
+    }
+    successCallback(body);
+    return;
+  });
+}
+
+function getInfo(reservatID, callback) {
+  request({
+      url: config.api + 'reservatorios/' + reservatID + '/info',
+      json: true
+  }, function (error, response, body) {
+      if (error || response.statusCode !== 200) {
+        return;
+      }
+      callback(body);
+      return;
+  });
 }
 
 function processQuickReply(recipientId, quickReply) {
@@ -72,13 +144,13 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendStartQuickReply(recipientId) {
+function sendQuickReply(recipientId, messageText) {
   var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
-      text: "Como posso ajudar?",
+      text: messageText,
       quick_replies: [
         {
           "content_type": "text",
