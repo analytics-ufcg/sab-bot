@@ -91,14 +91,12 @@ function getMatch(message, successCallback, errorCallback) {
     url: config.api + 'reservatorios/similares/' + message.text + '/70',
     json: true
   },function(error, response, body) {
-    console.log("Ai vem um erro: [ ");
-    console.log(error);
-    console.log(response);
-    console.log("]");
     if (error || response.status !== 200) {
+      console.log("Erro");
       errorCallback();
       return;
     }
+    console.log(body);
     successCallback(body);
     return;
   });
