@@ -53,7 +53,7 @@ function processText(senderID, message) {
     } else if (length === 1) {
       getInfo(info[0].id, function(reservat) {
         sendTypingOff(senderID);
-        sendTextMessage(recipientId, getReservatMessage(reservat));
+        sendTextMessage(senderID, getReservatMessage(reservat));
       });
     } else {
       var options = [];
@@ -91,7 +91,6 @@ function getMatch(message, successCallback, errorCallback) {
     url: config.api + 'reservatorios/similares/' + message.text + '/70',
     json: true
   },function(error, response, body) {
-    console.log(response);
     if (error || response.statusCode !== 200) {
       errorCallback();
       return;
