@@ -51,10 +51,9 @@ function processText(senderID, message) {
       sendTypingOff(senderID);
       sendQuickReply(senderID, "Não entendi. Seria isso?");
     } else if (length === 1) {
-      getInfo(info[0].id, function(reservat) {
-        console.log(reservat);
+      getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
-        sendTextMessage(senderID, getReservatMessage(reservat));
+        sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
       });
     } else {
       var options = [];
