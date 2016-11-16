@@ -52,6 +52,7 @@ function processText(senderID, message) {
       sendQuickReply(senderID, "Não entendi. Seria isso?");
     } else if (length === 1) {
       getInfo(info[0].id, function(reservat) {
+        console.log(reservat);
         sendTypingOff(senderID);
         sendTextMessage(senderID, getReservatMessage(reservat));
       });
@@ -95,7 +96,6 @@ function getMatch(message, successCallback, errorCallback) {
       errorCallback();
       return;
     }
-    console.log(body);
     successCallback(body);
     return;
   });
