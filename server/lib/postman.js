@@ -12,13 +12,17 @@ exports.receivedMessage = function(event) {
     timeOfMessage = event.timestamp,
     message = event.message;
 
-  console.log(message);
   if (message.is_echo) {
     return;
   } else if (message.quick_reply) {
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
-      return;
+      sendTypingOn(senderID);
+      getInfo(quickReplyPayload, function(reservatorios) {
+        sendTypingOff(senderID);
+        sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
+        return;
+      });
     }
     processQuickReply(senderID, message.quick_reply);
     return;
@@ -40,7 +44,7 @@ exports.receivedPostback = function(event) {
 }
 
 function getReservatMessage(reservat) {
-  return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade;
+  return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
 }
 
 function processText(senderID, message) {
