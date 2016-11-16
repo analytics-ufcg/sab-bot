@@ -23,6 +23,7 @@ exports.receivedMessage = function(event) {
         sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
         return;
       });
+      return;
     }
     processQuickReply(senderID, message.quick_reply);
     return;
