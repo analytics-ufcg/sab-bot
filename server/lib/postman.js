@@ -16,6 +16,7 @@ exports.receivedMessage = function(event) {
     return;
   } else if (message.quick_reply) {
     var quickReplyPayload = message.quick_reply.payload;
+    console.log(">>>>>>>> qrPayload " + quickReplyPayload);
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
       getInfo(quickReplyPayload, function(reservatorios) {
@@ -24,10 +25,9 @@ exports.receivedMessage = function(event) {
         return;
       });
       return;
-    } else {
-      processQuickReply(senderID, message.quick_reply);
-      return;
     }
+    processQuickReply(senderID, message.quick_reply);
+    return;
   }
   processText(senderID, message);
   return;
