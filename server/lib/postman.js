@@ -141,7 +141,10 @@ function processQuickReply(recipientId, quickReply) {
   var payload = quickReply.payload.split(";");
   switch (payload[0]) {
     case 'STATUS_PAYLOAD':
-      sendTextMessage(recipientId, "Qual o nome do reservatório?");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?1");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?2");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?3");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?4");
       break;
     case 'SIGN_UP_PAYLOAD':
       sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
