@@ -30,7 +30,7 @@ exports.receivedMessage = function(event) {
             quick_replies: [{
                 "content_type": "text",
                 "title": "Sim",
-                "payload": 'REGISTER_PAYLOAD;'+quickReplyPayload
+                "payload": 'REGISTER_PAYLOAD;' + quickReplyPayload
               },{
                   "content_type": "text",
                   "title": "Não",
@@ -39,6 +39,7 @@ exports.receivedMessage = function(event) {
             ]
           }
         };
+        callSendAPI(messageData);
         return;
       });
       return;
