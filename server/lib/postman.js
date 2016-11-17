@@ -16,12 +16,29 @@ exports.receivedMessage = function(event) {
     return;
   } else if (message.quick_reply) {
     var quickReplyPayload = message.quick_reply.payload;
-    console.log(">>>>>>>> qrPayload " + quickReplyPayload);
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
       getInfo(quickReplyPayload, function(reservatorios) {
         sendTypingOff(senderID);
         sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
+        var messageData = {
+          recipient: {
+            id: senderID
+          },
+          message: {
+            text: "Deseja receber notificações desse reservatório?",
+            quick_replies: [{
+                "content_type": "text",
+                "title": "Sim",
+                "payload": 'REGISTER_PAYLOAD;'+quickReplyPayload
+              },{
+                  "content_type": "text",
+                  "title": "Não",
+                  "payload": "NOT_REGISTER_PAYLOAD"
+                }
+            ]
+          }
+        };
         return;
       });
       return;
@@ -121,15 +138,19 @@ function getInfo(reservatID, callback) {
 
 function processQuickReply(recipientId, quickReply) {
   sendTypingOn(recipientId);
-  switch (quickReply.payload) {
+  var payload = quickReply.payload.split(";");
+  switch (payload[0]) {
     case 'STATUS_PAYLOAD':
       sendTextMessage(recipientId, "Qual o nome do reservatório?");
       break;
     case 'SIGN_UP_PAYLOAD':
       sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
       break;
+    case 'REGISTER_PAYLOAD':
+      sendTextMessage(recipientId, "Salvamos o reservatório "+ payload[1] );
+      break;
     default:
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      // sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
   sendTypingOff(recipientId);
