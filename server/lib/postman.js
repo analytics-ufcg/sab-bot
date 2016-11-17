@@ -20,13 +20,12 @@ exports.receivedMessage = function(event) {
       sendTypingOn(senderID);
       getInfo(quickReplyPayload, function(reservatorios) {
         sendTypingOff(senderID);
-        sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
         var messageData = {
           recipient: {
             id: senderID
           },
           message: {
-            text: "Deseja receber notificações desse reservatório?",
+            text: getReservatMessage(reservatorios[0])+" Deseja receber notificações desse reservatório?",
             quick_replies: [{
                 "content_type": "text",
                 "title": "Sim",
