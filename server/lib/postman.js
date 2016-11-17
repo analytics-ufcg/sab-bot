@@ -24,9 +24,10 @@ exports.receivedMessage = function(event) {
         return;
       });
       return;
+    } else {
+      processQuickReply(senderID, message.quick_reply);
+      return;
     }
-    processQuickReply(senderID, message.quick_reply);
-    return;
   }
   processText(senderID, message);
   return;
