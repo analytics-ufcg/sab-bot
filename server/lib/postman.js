@@ -141,10 +141,7 @@ function processQuickReply(recipientId, quickReply) {
   var payload = quickReply.payload.split(";");
   switch (payload[0]) {
     case 'STATUS_PAYLOAD':
-      sendTextMessage(recipientId, "Qual o nome do reservatório?1");
-      sendTextMessage(recipientId, "Qual o nome do reservatório?2");
-      sendTextMessage(recipientId, "Qual o nome do reservatório?3");
-      sendTextMessage(recipientId, "Qual o nome do reservatório?4");
+      sendTextMessage(recipientId, "Qual o nome do reservatório?");
       break;
     case 'SIGN_UP_PAYLOAD':
       sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
@@ -165,10 +162,15 @@ function sendTextMessage(recipientId, messageText) {
       recipient: {
         id: recipientId
       },
-      message: {
+      message: [
+        {
         text: messageText,
         metadata: "DEVELOPER_DEFINED_METADATA"
-      }
+      },{
+      text: messageText + " hahaha",
+      metadata: "DEVELOPER_DEFINED_METADATA"
+    }
+    ]
     };
 
   callSendAPI(messageData);
