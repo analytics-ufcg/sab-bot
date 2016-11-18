@@ -167,31 +167,8 @@ function sendTextMessage(recipientId, messageText) {
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
-  var
-    messageData2 = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText + "segunda mensagem",
-        metadata: "DEVELOPER_DEFINED_METADATA"
-      }
-    };
-  var
-    messageData3 = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText + "terceira mensagem",
-        metadata: "DEVELOPER_DEFINED_METADATA"
-      }
-    };
-
 
   callSendAPI(messageData);
-  callSendAPI(messageData2);
-  callSendAPI(messageData3);
 }
 
 function sendQuickReply(recipientId, messageText) {
