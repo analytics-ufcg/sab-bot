@@ -6,7 +6,7 @@ const
   logger = require('morgan');
 
 var app = express();
-app.use(logger('combined'))
+app.use(logger('short'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.static('public'));
