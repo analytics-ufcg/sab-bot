@@ -254,7 +254,7 @@ function callSendAPI(messageData) {
   var post_req = http.request({
     hostname: 'graph.facebook.com',
     method: 'POST',
-    path: '/v2.6/me/messages',
+    path: '/v2.6/me/messages?access_token=EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD',
     agent: keepAliveAgent,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
