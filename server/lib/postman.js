@@ -2,11 +2,7 @@
 
 const
   request = require('request'),
-  config = require('./../config/config'),
-  http = require('https'),
-  querystring = require('querystring');
-var
-  keepAliveAgent = new http.Agent({ keepAlive: true, maxSockets: 1 });
+  config = require('./../config/config');
 
 exports.receivedMessage = function(event) {
   var
@@ -153,12 +149,7 @@ function processQuickReply(recipientId, quickReply) {
       sendTextMessage(recipientId, "Salvamos o reservatório "+ payload[1] );
       break;
     default:
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.1");
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.2");
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.3");
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.4");
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.5");
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.6");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
   sendTypingOff(recipientId);
@@ -229,14 +220,13 @@ function sendTypingOff(recipientId) {
   callSendAPI(messageData);
 }
 
-function xxx(messageData) {
-
+function callSendAPI(messageData) {
   request({
     agent: keepAliveAgent,
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
     method: 'POST',
-    js: messageData
+    json: messageData
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
@@ -253,23 +243,4 @@ function xxx(messageData) {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   });
-}
-
-function callSendAPI(messageData) {
-  var post_data = JSON.stringify(messageData);
-  var post_req = http.request({
-    hostname: 'graph.facebook.com',
-    method: 'POST',
-    path: '/v2.6/me/messages?access_token=EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD',
-    agent: keepAliveAgent,
-    headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(post_data)
-    }
-  }, function(res) {
-    console.log("Foi");
-  });
-  console.log(post_data);
-  post_req.write(post_data);
-  post_req.end();
 }
