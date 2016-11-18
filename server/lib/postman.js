@@ -170,8 +170,7 @@ function sendTextMessage(recipientId, messageText) {
       }
     };
 
-  // callSendAPI(messageData);
-  callSendHTTP(messageData);
+  callSendAPI(messageData);
 }
 
 function sendQuickReply(recipientId, messageText) {
@@ -224,7 +223,8 @@ function sendTypingOff(recipientId) {
   callSendAPI(messageData);
 }
 
-function callSendAPI(messageData) {
+function xxx(messageData) {
+
   request({
     agent: keepAliveAgent,
     uri: 'https://graph.facebook.com/v2.6/me/messages',
@@ -249,7 +249,7 @@ function callSendAPI(messageData) {
   });
 }
 
-function callSendHTTP(messageData) {
+function callSendAPI(messageData) {
   var post_data = JSON.stringify(messageData);
   var post_req = http.request({
     hostname: 'https://graph.facebook.com',
