@@ -267,7 +267,7 @@ function callSendAPI(messageData) {
         'Content-Length': Buffer.byteLength(post_data)
     }
   }, function(res) {
-    console.log(res);
+    console.log("Foi");
   });
   console.log(post_data);
   post_req.write(post_data);
