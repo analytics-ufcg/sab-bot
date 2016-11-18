@@ -166,7 +166,8 @@ function sendTextMessage(recipientId, messageText) {
         message: {
           text: messageText,
           metadata: "DEVELOPER_DEFINED_METADATA"
-        },
+        }
+      },
       {
         recipient: {
           id: recipientId
