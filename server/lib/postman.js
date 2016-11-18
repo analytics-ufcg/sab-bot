@@ -249,10 +249,10 @@ function callSendAPI(messageData) {
       qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
       method: 'POST',
       json: messageData
-    }, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var recipientId = body.recipient_id;
-        var messageId = body.message_id;
+    }, function (error2, response2, body2) {
+      if (!error2 && response2.statusCode == 200) {
+        var recipientId = body2.recipient_id;
+        var messageId = body2.message_id;
 
         if (messageId) {
           console.log("Successfully sent message with id %s to recipient %s",
@@ -262,7 +262,7 @@ function callSendAPI(messageData) {
           recipientId);
         }
       } else {
-        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+        console.error("Failed calling Send API", response2.statusCode, response2.statusMessage, body2.error);
       }
     })
   );
