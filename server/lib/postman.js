@@ -2,8 +2,10 @@
 
 const
   request = require('request'),
-  config = require('./../config/config');
-
+  config = require('./../config/config'),
+  http = require('http');
+var
+  keepAliveAgent = new http.Agent({ keepAlive: true });
 
 exports.receivedMessage = function(event) {
   var
@@ -168,7 +170,8 @@ function sendTextMessage(recipientId, messageText) {
       }
     };
 
-  callSendAPI(messageData);
+  // callSendAPI(messageData);
+  callSendHTTP(messageData);
 }
 
 function sendQuickReply(recipientId, messageText) {
@@ -221,9 +224,6 @@ function sendTypingOff(recipientId) {
   callSendAPI(messageData);
 }
 
-const http = require('http');
-var keepAliveAgent = new http.Agent({ keepAlive: true });
-
 function callSendAPI(messageData) {
   request({
     agent: keepAliveAgent,
@@ -247,4 +247,22 @@ function callSendAPI(messageData) {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   });
+}
+
+function callSendHTTP(messageData) {
+  var post_data = JSON.stringify(messageData);
+  var post_req = http.request({
+    hostname: 'https://graph.facebook.com',
+    method: 'POST',
+    path: '/v2.6/me/messages',
+    agent: keepAliveAgent,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(post_data)
+    }
+  }, function(res) {
+    console.log(res);
+  });
+  post_req.write(post_data);
+  post_req.end();
 }
