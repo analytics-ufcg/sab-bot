@@ -3,7 +3,8 @@
 const
   request = require('request'),
   config = require('./../config/config'),
-  http = require('https');
+  http = require('https'),
+  querystring = require('querystring');
 var
   keepAliveAgent = new http.Agent({ keepAlive: true });
 
@@ -250,7 +251,7 @@ function xxx(messageData) {
 }
 
 function callSendAPI(messageData) {
-  var post_data = JSON.stringify(messageData);
+  var post_data = querystring.stringify(messageData);
   var post_req = http.request({
     hostname: 'graph.facebook.com',
     method: 'POST',
