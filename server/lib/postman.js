@@ -153,7 +153,12 @@ function processQuickReply(recipientId, quickReply) {
       sendTextMessage(recipientId, "Salvamos o reservatório "+ payload[1] );
       break;
     default:
-      // sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.1");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.2");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.3");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.4");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.5");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.6");
       break;
   }
   sendTypingOff(recipientId);
@@ -231,7 +236,7 @@ function xxx(messageData) {
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
     method: 'POST',
-    json: messageData
+    js  on: messageData
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
