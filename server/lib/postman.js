@@ -243,26 +243,27 @@ function callSendAPI(messageData) {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   })
-  .pipe(request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
-    method: 'POST',
-    json: messageData
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
+  .pipe(
+    request({
+      uri: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
+      method: 'POST',
+      json: messageData
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var recipientId = body.recipient_id;
+        var messageId = body.message_id;
 
-      if (messageId) {
-        console.log("Successfully sent message with id %s to recipient %s",
-          messageId, recipientId);
+        if (messageId) {
+          console.log("Successfully sent message with id %s to recipient %s",
+            messageId, recipientId);
+        } else {
+        console.log("Successfully called Send API for recipient %s",
+          recipientId);
+        }
       } else {
-      console.log("Successfully called Send API for recipient %s",
-        recipientId);
+        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
       }
-    } else {
-      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-    }
-  });
-);
+    })
+  );
 }
