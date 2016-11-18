@@ -167,8 +167,31 @@ function sendTextMessage(recipientId, messageText) {
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
+  var
+    messageData2 = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText + "segunda mensagem",
+        metadata: "DEVELOPER_DEFINED_METADATA"
+      }
+    };
+  var
+    messageData3 = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText + "terceira mensagem",
+        metadata: "DEVELOPER_DEFINED_METADATA"
+      }
+    };
+
 
   callSendAPI(messageData);
+  callSendAPI(messageData2);
+  callSendAPI(messageData3);
 }
 
 function sendQuickReply(recipientId, messageText) {
@@ -226,7 +249,8 @@ function callSendAPI(messageData) {
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
     method: 'POST',
-    json: messageData
+    json: messageData,
+    forever: true
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
