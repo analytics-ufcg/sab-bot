@@ -252,9 +252,8 @@ function xxx(messageData) {
 function callSendAPI(messageData) {
   var post_data = JSON.stringify(messageData);
   var post_req = http.request({
-    hostname: 'https://graph.facebook.com',
+    hostname: 'graph.facebook.com',
     method: 'POST',
-    port: 443,
     path: '/v2.6/me/messages?access_token=EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD',
     agent: keepAliveAgent,
     headers: {
