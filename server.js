@@ -2,9 +2,11 @@
 
 const
   express = require('express'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  logger = require('morgan');
 
 var app = express();
+app.use(logger('combined'))
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.static('public'));

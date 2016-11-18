@@ -162,15 +162,10 @@ function sendTextMessage(recipientId, messageText) {
       recipient: {
         id: recipientId
       },
-      message: [
-        {
+      message: {
         text: messageText,
         metadata: "DEVELOPER_DEFINED_METADATA"
-      },{
-      text: messageText + " hahaha",
-      metadata: "DEVELOPER_DEFINED_METADATA"
-    }
-    ]
+      }
     };
 
   callSendAPI(messageData);
