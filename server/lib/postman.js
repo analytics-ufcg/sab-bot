@@ -252,7 +252,7 @@ function xxx(messageData) {
 function callSendAPI(messageData) {
   var post_data = JSON.stringify(messageData);
   var post_req = http.request({
-    hostname: 'https://graph.facebook.com',
+    hostname: 'graph.facebook.com',
     method: 'POST',
     path: '/v2.6/me/messages',
     agent: keepAliveAgent,
