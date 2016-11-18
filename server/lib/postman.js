@@ -6,7 +6,7 @@ const
   http = require('https'),
   querystring = require('querystring');
 var
-  keepAliveAgent = new http.Agent({ keepAlive: true });
+  keepAliveAgent = new http.Agent({ keepAlive: true, maxSockets: 1 });
 
 exports.receivedMessage = function(event) {
   var
