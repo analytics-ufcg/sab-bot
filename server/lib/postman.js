@@ -158,15 +158,25 @@ function processQuickReply(recipientId, quickReply) {
 
 function sendTextMessage(recipientId, messageText) {
   var
-    messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText,
-        metadata: "DEVELOPER_DEFINED_METADATA"
+    messageData = [
+      {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: messageText,
+          metadata: "DEVELOPER_DEFINED_METADATA"
+        },
+      {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: messageText + " msg2",
+          metadata: "DEVELOPER_DEFINED_METADATA"
+        }
       }
-    };
+    ];
 
   callSendAPI(messageData);
 }
