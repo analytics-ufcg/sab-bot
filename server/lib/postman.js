@@ -263,6 +263,7 @@ function callSendAPI(messageData) {
   }, function(res) {
     console.log(res);
   });
+  console.log(post_data);
   post_req.write(post_data);
   post_req.end();
 }
