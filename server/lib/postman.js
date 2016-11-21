@@ -25,7 +25,7 @@ exports.receivedMessage = function(event) {
             id: senderID
           },
           message: {
-            text: getReservatMessage(reservatorios[0])+" Deseja receber notificações desse reservatório?",
+            text: getReservatMessage(reservatorios[0])+". Deseja receber notificações desse reservatório?",
             quick_replies: [{
                 "content_type": "text",
                 "title": "Sim",
@@ -147,13 +147,28 @@ function processQuickReply(recipientId, quickReply) {
       sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
       break;
     case 'REGISTER_PAYLOAD':
-      sendTextMessage(recipientId, "Salvamos o reservatório "+ payload[1] );
+      registerUser(recipientId,payload[1]);
+      break;
+    case 'NOT_REGISTER_PAYLOAD':
       break;
     default:
       sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
   sendTypingOff(recipientId);
+}
+
+function registerUser(recipientId, reservatId) {
+  var connection = mysql.createConnection(config.db_config);
+  connection.connect();
+  connection.query(sprintf('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES(%s,%s);',recipientId,reservatId), function(err, rows, fields) {
+    if (err){
+      console.log(err);
+      return;
+    }
+    sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
+    });
+  connection.end();
 }
 
 function sendTextMessage(recipientId, messageText) {
