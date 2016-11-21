@@ -161,34 +161,15 @@ function processQuickReply(recipientId, quickReply) {
 function registerUser(recipientId, reservatId) {
   var connection = mysql.createConnection(config.db_config);
   connection.connect();
-  connection.query('SELECT id_user, id_reservatorio FROM tb_user_reservatorio WHERE id_user = '+recipientId+' AND id_reservatorio = '+reservatId+';',
-    function(err, rows, fields) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      if (rows[0]) {
-        console.log("Reservatório já cadastrado ("+rows[0].id_user+"="+rows[0].id_reservatorio+")");
-        return;
-      }
-      connection.connect();
-      connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');',
-        function(err, rows, fields) {
-          if (err) {
-            console.log(err);
-            return;
-          }
-          sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
-        });
+  connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
       connection.end();
-    });
+      return;
+    }
+    sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
+  });
   connection.end();
-}
-
-function verifyUser(recipientId, reservatId) {
-  var connection = mysql.createConnection(config.db_config);
-  connection.connect();
-
 }
 
 function sendTextMessage(recipientId, messageText) {
