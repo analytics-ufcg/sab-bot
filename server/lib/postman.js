@@ -57,12 +57,12 @@ exports.receivedPostback = function(event) {
     timeOfPostback = event.timestamp,
     payload = event.postback.payload;
 
-  if (payload === "GET_STARTED_PAYLOAD"){
+  if (payload === "GET_STARTED_PAYLOAD") {
     sendQuickReply(senderID, "Como posso ajudá-lo?");
   }
 }
 
-exports.receivedDeliveryConfirmation(event) {
+exports.receivedDeliveryConfirmation = function(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var delivery = event.delivery;
