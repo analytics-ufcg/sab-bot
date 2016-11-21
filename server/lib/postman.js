@@ -161,7 +161,7 @@ function processQuickReply(recipientId, quickReply) {
 function registerUser(recipientId, reservatId) {
   var connection = mysql.createConnection(config.db_config);
   connection.connect();
-  connection.query('SELECT id_user,id_reservatorio FROM tb_user_reservatorio WHERE id_user = '+recipientId+' AND id_reservatorio = '+reservatId+');',
+  connection.query('SELECT id_user, id_reservatorio FROM tb_user_reservatorio WHERE id_user = '+recipientId+' AND id_reservatorio = '+reservatId+';',
     function(err, rows, fields) {
       if (err) {
         console.log(err);
