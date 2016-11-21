@@ -161,7 +161,7 @@ function processQuickReply(recipientId, quickReply) {
 function registerUser(recipientId, reservatId) {
   var connection = mysql.createConnection(config.db_config);
   connection.connect();
-  connection.query(sprintf('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES(%s,%s);',recipientId,reservatId), function(err, rows, fields) {
+  connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
     if (err){
       console.log(err);
       return;
