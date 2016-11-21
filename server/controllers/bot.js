@@ -26,6 +26,8 @@ exports.process = function(req, res) {
           postman.receivedPostback(messagingEvent);
         } else if (messagingEvent.delivery) {
           postman.receivedDeliveryConfirmation(messagingEvent);
+        } else if (messagingEvent.read) {
+          postman.receivedMessageRead(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent");
         }

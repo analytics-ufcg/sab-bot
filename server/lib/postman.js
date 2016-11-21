@@ -81,6 +81,19 @@ exports.receivedDeliveryConfirmation = function(event) {
   console.log("All message before %d were delivered.", watermark);
 }
 
+exports.receivedMessageRead = function(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+
+  // All messages before watermark (a timestamp) or sequence have been seen.
+  var watermark = event.read.watermark;
+  var sequenceNumber = event.read.seq;
+
+  console.log("Received message read event for watermark %d and sequence " +
+    "number %d", watermark, sequenceNumber);
+  console.log(event);
+}
+
 function getReservatMessage(reservat) {
   return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
 }
