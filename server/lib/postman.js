@@ -163,8 +163,11 @@ function registerUser(recipientId, reservatId) {
   connection.connect();
   connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
     if (err) {
+      if (err.errno == 1062) {
+        sendTextMessage(recipientId, "Você já está cadastrado nesse reservatório.");
+        return;
+      }
       console.log(err);
-      connection.end();
       return;
     }
     sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
