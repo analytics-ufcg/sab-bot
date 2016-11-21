@@ -171,13 +171,16 @@ function registerUser(recipientId, reservatId) {
         console.log("Reservatório já cadastrado ("+rows[0].id_user+"="+rows[0].id_reservatorio+")");
         return;
       }
-      connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
-      });
+      connection.connect();
+      connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');',
+        function(err, rows, fields) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
+        });
+      connection.end();
     });
   connection.end();
 }
