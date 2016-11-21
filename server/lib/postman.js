@@ -168,7 +168,7 @@ function registerUser(recipientId, reservatId) {
         connection.end();
         return;
       }
-      if (!rows[0]) {
+      if (rows[0]) {
         console.log("Reservatório já cadastrado ("+rows[0].id_user+"="+rows[0].id_reservatorio+")");
         connection.end();
         return;
