@@ -3,7 +3,8 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
-  logger = require('morgan');
+  logger = require('morgan'),
+  mysql = require('mysql');
 
 var app = express();
 app.use(logger('short'));

@@ -2,7 +2,8 @@
 
 const
   request = require('request'),
-  config = require('./../config/config');
+  config = require('./../config/config'),
+  mysql = require('mysql');
 
 exports.receivedMessage = function(event) {
   var
@@ -222,9 +223,8 @@ function sendTypingOff(recipientId) {
 
 function callSendAPI(messageData) {
   request({
-    agent: keepAliveAgent,
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: "EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD" },
+    qs: { access_token: config.fb.access_token },
     method: 'POST',
     json: messageData
   }, function (error, response, body) {
