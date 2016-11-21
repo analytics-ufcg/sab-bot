@@ -62,6 +62,24 @@ exports.receivedPostback = function(event) {
   }
 }
 
+exports.receivedDeliveryConfirmation(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var delivery = event.delivery;
+  var messageIDs = delivery.mids;
+  var watermark = delivery.watermark;
+  var sequenceNumber = delivery.seq;
+
+  if (messageIDs) {
+    messageIDs.forEach(function(messageID) {
+      console.log("Received delivery confirmation for message ID: %s",
+        messageID);
+    });
+  }
+
+  console.log("All message before %d were delivered.", watermark);
+}
+
 function getReservatMessage(reservat) {
   return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
 }
@@ -162,13 +180,28 @@ function registerUser(recipientId, reservatId) {
   var connection = mysql.createConnection(config.db_config);
   connection.connect();
   connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
-    if (err){
+    if (err) {
       console.log(err);
+      connection.end();
       return;
     }
     sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
-    });
+  });
   connection.end();
+}
+
+function verifyUser(recipientId, reservatId) {
+  var connection = mysql.createConnection(config.db_config);
+  connection.connect();
+  connection.query('SELECT id_user,id_reservatorio FROM tb_user_reservatorio WHERE id_user = '+recipientId+' AND id_reservatorio = '+reservatId+');', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      connection.end();
+      return;
+    }
+    connection.end();
+    return rows[0];
+  });
 }
 
 function sendTextMessage(recipientId, messageText) {
