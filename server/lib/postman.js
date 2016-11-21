@@ -165,21 +165,17 @@ function registerUser(recipientId, reservatId) {
     function(err, rows, fields) {
       if (err) {
         console.log(err);
-        connection.end();
         return;
       }
       if (rows[0]) {
         console.log("Reservatório já cadastrado ("+rows[0].id_user+"="+rows[0].id_reservatorio+")");
-        connection.end();
         return;
       }
       connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
         if (err) {
           console.log(err);
-          connection.end();
           return;
         }
-        connection.end();
         sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
       });
     });
