@@ -3,7 +3,8 @@
 const
   request = require('request'),
   config = require('./../config/config'),
-  mysql = require('mysql');
+  mysql = require('mysql'),
+  schedule = require('node-schedule');
 
 exports.receivedMessage = function(event) {
   var
@@ -263,3 +264,7 @@ function callSendAPI(messageData) {
     }
   });
 }
+
+schedule.scheduleJob('* * 20 * *', function() {
+  sendTextMessage('1243481522390557', "hi, poncho!");
+});
