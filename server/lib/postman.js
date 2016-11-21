@@ -74,6 +74,7 @@ exports.receivedDeliveryConfirmation = function(event) {
     messageIDs.forEach(function(messageID) {
       console.log("Received delivery confirmation for message ID: %s",
         messageID);
+        console.log(event);
     });
   }
 
