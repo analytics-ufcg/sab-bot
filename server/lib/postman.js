@@ -265,13 +265,8 @@ function callSendAPI(messageData) {
   });
 }
 
-schedule.scheduleJob('16 14 * * * ', function(){
-    console.log('11:16 ?');
+schedule.scheduleJob('* 20 14 * * ', function(){
+    console.log('11:20?');
     console.log(new Date());
-    sendTextMessage('1243481522390557', "Ei, são 11 horas!");
-});
-schedule.scheduleJob('15 * * * * ', function(){
-    console.log('15 minutos?');
-    console.log(new Date());
-    sendTextMessage('1243481522390557', "Ei, são 11 horas!");
+    sendTextMessage('1243481522390557', "Ei, são 11 e 20!");
 });
