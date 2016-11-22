@@ -265,7 +265,7 @@ function callSendAPI(messageData) {
   });
 }
 
-schedule.scheduleJob('0 43 18 * * ', function(){
+schedule.scheduleJob('0 47 18 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio group by id_reservatorio;', function(err, rows, fields) {
@@ -277,7 +277,7 @@ schedule.scheduleJob('0 43 18 * * ', function(){
         var users = rows[i].users.split(",");
         getInfo(rows[i].id_reservatorio, function(reservatorios) {
           for (var j = 0; j < users.length; j++) {
-            sendTextMessage(users[i], getReservatMessage(reservatorios[0]));
+            sendTextMessage(users[j], getReservatMessage(reservatorios[0]));
           }
         });
       }
