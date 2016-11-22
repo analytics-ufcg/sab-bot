@@ -265,7 +265,7 @@ function callSendAPI(messageData) {
   });
 }
 
-schedule.scheduleJob('45 * * * * *', function(){
-    console.log('This runs at the 45th mintue of every hour.');
-    sendTextMessage('1243481522390557', "hi, poncho!");
+schedule.scheduleJob('* 14 * * * ', function(){
+    console.log('This runs at the 11th hour every day.');
+    sendTextMessage('1243481522390557', "Ei, são 11 horas!");
 });
