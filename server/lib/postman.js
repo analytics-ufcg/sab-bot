@@ -66,7 +66,7 @@ exports.receivedPostback = function(event) {
       unregisterUser(senderID);
       break;
     case 'HELP_PAYLOAD':
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      sendTextMessage(senderID, "Ajuda tarda mas não falha.");
       break;
     default:
       sendQuickReply(senderID, "Como posso ajudá-lo?");
