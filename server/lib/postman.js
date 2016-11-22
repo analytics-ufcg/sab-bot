@@ -58,8 +58,19 @@ exports.receivedPostback = function(event) {
     timeOfPostback = event.timestamp,
     payload = event.postback.payload;
 
-  if (payload === "GET_STARTED_PAYLOAD") {
-    sendQuickReply(senderID, "Como posso ajudá-lo?");
+  switch (payload) {
+    case 'GET_STARTED_PAYLOAD':
+      sendQuickReply(senderID, "Como posso ajudá-lo?");
+      break;
+    case 'STOP_NOTIFICATIONS_PAYLOAD':
+      unregisterUser(senderID);
+      break;
+    case 'HELP_PAYLOAD':
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      break;
+    default:
+      sendQuickReply(senderID, "Como posso ajudá-lo?");
+      break;
   }
 }
 
@@ -176,6 +187,19 @@ function registerUser(recipientId, reservatId) {
   connection.end();
 }
 
+function unregisterUser(recipientId) {
+  var connection = mysql.createConnection(config.db_config);
+  connection.connect();
+  connection.query('DELETE FROM tb_user_reservatorio WHERE id_user = '+recipientId+';', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    sendTextMessage(recipientId, "Você não receberá atualizações a partir de agora.");
+  });
+  connection.end();
+}
+
 function sendTextMessage(recipientId, messageText) {
   var
     messageData = {
@@ -273,7 +297,7 @@ function sendReportToAll(reservatId, recipients) {
   });
 }
 
-schedule.scheduleJob('0 2 19 * * ', function(){
+schedule.scheduleJob('0 0 10 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio group by id_reservatorio;', function(err, rows, fields) {
