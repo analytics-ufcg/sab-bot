@@ -265,6 +265,14 @@ function callSendAPI(messageData) {
   });
 }
 
+function sendReportToAll(reservatId, recipients) {
+  getInfo(reservatId, function(reservatorios) {
+    for (var j = 0; j < recipients.length; j++) {
+      sendTextMessage(recipients[j], getReservatMessage(reservatorios[0]));
+    }
+  });
+}
+
 schedule.scheduleJob('0 47 18 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
@@ -274,12 +282,10 @@ schedule.scheduleJob('0 47 18 * * ', function(){
         return;
       }
       for (var i = 0; i < rows.length; i++) {
+        var reservatId = rows[i].id_reservatorio;
         var users = rows[i].users.split(",");
-        getInfo(rows[i].id_reservatorio, function(reservatorios) {
-          for (var j = 0; j < users.length; j++) {
-            sendTextMessage(users[j], getReservatMessage(reservatorios[0]));
-          }
-        });
+        sendReportToAll(reservatId, users);
       }
     });
+    connection.end();
 });
