@@ -265,8 +265,21 @@ function callSendAPI(messageData) {
   });
 }
 
-schedule.scheduleJob('0 22 14 * * ', function(){
-    console.log('11:20?');
-    console.log(new Date());
-    sendTextMessage('1243481522390557', "Ei, são 11 e 22!");
+schedule.scheduleJob('0 43 18 * * ', function(){
+    var connection = mysql.createConnection(config.db_config);
+    connection.connect();
+    connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio group by id_reservatorio;', function(err, rows, fields) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      for (var i = 0; i < rows.length; i++) {
+        var users = rows[i].users.split(",");
+        getInfo(rows[i].id_reservatorio, function(reservatorios) {
+          for (var j = 0; j < users.length; j++) {
+            sendTextMessage(users[i], getReservatMessage(reservatorios[0]));
+          }
+        });
+      }
+    });
 });
