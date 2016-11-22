@@ -273,7 +273,7 @@ function sendReportToAll(reservatId, recipients) {
   });
 }
 
-schedule.scheduleJob('0 47 18 * * ', function(){
+schedule.scheduleJob('0 2 19 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio group by id_reservatorio;', function(err, rows, fields) {
