@@ -265,6 +265,6 @@ function callSendAPI(messageData) {
   });
 }
 
-schedule.scheduleJob('* * 20 * *', function() {
+schedule.scheduleJob('* * 13 35 *', function() {
   sendTextMessage('1243481522390557', "hi, poncho!");
 });
