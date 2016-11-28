@@ -88,7 +88,25 @@ function processText(senderID, message) {
     } else if (length === 1) {
       getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
-        sendTextMessage(senderID, getReservatMessage(reservatorios[0]));
+        var messageData = {
+          recipient: {
+            id: senderID
+          },
+          message: {
+            text: getReservatMessage(reservatorios[0])+". Deseja receber notificações desse reservatório?",
+            quick_replies: [{
+                "content_type": "text",
+                "title": "Sim",
+                "payload": 'REGISTER_PAYLOAD;' + reservatorios[0]
+              },{
+                  "content_type": "text",
+                  "title": "Não",
+                  "payload": "NOT_REGISTER_PAYLOAD"
+                }
+            ]
+          }
+        };
+        callSendAPI(messageData);
       });
     } else {
       var options = [];
