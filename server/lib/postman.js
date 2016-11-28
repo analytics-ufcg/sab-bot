@@ -97,7 +97,7 @@ function processText(senderID, message) {
             quick_replies: [{
                 "content_type": "text",
                 "title": "Sim",
-                "payload": 'REGISTER_PAYLOAD;' + reservatorios[0]
+                "payload": 'REGISTER_PAYLOAD;' + reservatorios[0].id
               },{
                   "content_type": "text",
                   "title": "Não",
