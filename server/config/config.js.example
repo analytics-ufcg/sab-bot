@@ -1,14 +1,14 @@
 module.exports = {
   port: process.env.PORT || 5002,
-  api: 'http://localhost:5003/api/',
+  api: 'http://pathtoapi.com.br/',
   fb : {
-    validation_token : 'meudeuduceuberg',
-    access_token : 'EAAHuk2acSMoBACZAK6AwzmNpNa4LXhHKyKcx3Kvt7CutdlpV45uV06oZBGNsUwDIu58toUJDL6aWIcgRn5b2NBFkvnJtPJ0albYrmnGnFr8hG3xIR20YK0lZB9GkJkswcaVbwCPjPByEi3OEF1bU5nN99QSyhHzYaPDVuZAiBAZDZD'
+    validation_token : 'validation-token',
+    access_token : 'FACEBOOKVALIDATIONTOKEN'
   },
   db_config: {
-    host : 'insa-db',
-    user : 'root',
-    password : 'Volup14',
-    database : 'INSA'
+    host : 'hostname',
+    user : 'username',
+    password : 'mypassword',
+    database : 'databasename'
   }
 }
