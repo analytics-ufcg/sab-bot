@@ -75,7 +75,7 @@ exports.receivedPostback = function(event) {
 }
 
 function getReservatMessage(reservat) {
-  return reservat.reservat + " está com "+reservat.volume+"hm³, que equivale à "+reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
+  return reservat.reservat + " está com " + reservat.volume+"hm³ (medido em" + reservat.data_informacao + "), que equivale à " + reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
 }
 
 function processText(senderID, message) {
