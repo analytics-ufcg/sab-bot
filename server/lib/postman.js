@@ -185,26 +185,40 @@ function unregisterUser(recipientId) {
 }
 
 function sendReservatMessage(recipientId, reservat) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: getReservatMessage(reservat)+" Deseja receber notificações desse reservatório?",
-      quick_replies: [{
-          "content_type": "text",
-          "title": "Sim",
-          "payload": 'REGISTER_PAYLOAD;' + reservat.id
-        },{
-            "content_type": "text",
-            "title": "Não",
-            "payload": "NOT_REGISTER_PAYLOAD"
-          }
-      ]
+  var connection = mysql.createConnection(config.db_config);
+  connection.connect();
+  connection.query('SELECT COUNT(*) FROM tb_user_reservatorio WHERE id_user = '+recipientId+' and id_reservatorio = '+reservatId+');', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
     }
-  };
-  callSendAPI(messageData);
-  return;
+    if(rows[0]){
+      sendTextMessage(getReservatMessage(reservat));
+      return;
+    }
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: getReservatMessage(reservat)+" Deseja receber notificações desse reservatório?",
+        quick_replies: [{
+            "content_type": "text",
+            "title": "Sim",
+            "payload": 'REGISTER_PAYLOAD;' + reservat.id
+          },{
+              "content_type": "text",
+              "title": "Não",
+              "payload": "NOT_REGISTER_PAYLOAD"
+            }
+        ]
+      }
+    };
+    callSendAPI(messageData);
+    return;
+  });
+  connection.end();
+
 }
 
 function sendTextMessage(recipientId, messageText) {
