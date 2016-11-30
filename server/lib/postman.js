@@ -187,12 +187,12 @@ function unregisterUser(recipientId) {
 function sendReservatMessage(recipientId, reservat) {
   var connection = mysql.createConnection(config.db_config);
   connection.connect();
-  connection.query('SELECT COUNT(*) FROM tb_user_reservatorio WHERE id_user = '+recipientId+' and id_reservatorio = '+reservat.id+';', function(err, rows, fields) {
+  connection.query('SELECT COUNT(*) as is_registered FROM tb_user_reservatorio WHERE id_user = '+recipientId+' and id_reservatorio = '+reservat.id+';', function(err, rows, fields) {
     if (err) {
       console.log(err);
       return;
     }
-    if(rows[0]){
+    if(rows[0].is_registered){
       sendTextMessage(recipientId, getReservatMessage(reservat));
       return;
     }
