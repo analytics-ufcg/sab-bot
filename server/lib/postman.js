@@ -74,7 +74,7 @@ function processText(senderID, message) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
       });
-    } else {
+    } else if (length <= 10) {
       var options = [];
       var optionsMessage = "Você quis dizer um desses?\n\n";
       for (var i = 0; i < info.length; i++) {
@@ -96,6 +96,9 @@ function processText(senderID, message) {
       };
       sendTypingOff(senderID);
       callSendAPI(messageData);
+    } else {
+      sendTypingOff(senderID);
+      sendTextMessage(senderID, "Encontrei muitos resultados, seja mais específico. 😥");
     }
     return;
   }, function error() {
