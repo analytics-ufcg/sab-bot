@@ -193,7 +193,7 @@ function sendReservatMessage(recipientId, reservat) {
       return;
     }
     if(rows[0]){
-      sendTextMessage(getReservatMessage(reservat));
+      sendTextMessage(recipientId, getReservatMessage(reservat));
       return;
     }
     var messageData = {
