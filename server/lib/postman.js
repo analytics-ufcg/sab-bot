@@ -26,7 +26,7 @@ exports.receivedMessage = function(event) {
             id: senderID
           },
           message: {
-            text: getReservatMessage(reservatorios[0])+". Deseja receber notificações desse reservatório?",
+            text: getReservatMessage(reservatorios[0])+" Deseja receber notificações desse reservatório?",
             quick_replies: [{
                 "content_type": "text",
                 "title": "Sim",
@@ -76,7 +76,7 @@ exports.receivedPostback = function(event) {
 
 function getReservatMessage(reservat) {
   if(reservat.volume){
-    return reservat.reservat + " está com " + reservat.volume+"hm³ (medido em " + reservat.data_informacao + "), que equivale à " + reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³";
+    return reservat.reservat + " está com " + reservat.volume+"hm³ (medido em " + reservat.data_informacao + "), que equivale à " + reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³.";
   }
   return reservat.reservat + " tem capacidade total de " + reservat.capacidade + "hm³. Atualmente não possuímos dados do volume.";
 }
