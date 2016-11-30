@@ -21,26 +21,7 @@ exports.receivedMessage = function(event) {
       sendTypingOn(senderID);
       getInfo(quickReplyPayload, function(reservatorios) {
         sendTypingOff(senderID);
-        var messageData = {
-          recipient: {
-            id: senderID
-          },
-          message: {
-            text: getReservatMessage(reservatorios[0])+" Deseja receber notificações desse reservatório?",
-            quick_replies: [{
-                "content_type": "text",
-                "title": "Sim",
-                "payload": 'REGISTER_PAYLOAD;' + quickReplyPayload
-              },{
-                  "content_type": "text",
-                  "title": "Não",
-                  "payload": "NOT_REGISTER_PAYLOAD"
-                }
-            ]
-          }
-        };
-        callSendAPI(messageData);
-        return;
+        sendReservatMessage(senderID, reservatorios[0]);
       });
       return;
     }
@@ -91,25 +72,7 @@ function processText(senderID, message) {
     } else if (length === 1) {
       getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
-        var messageData = {
-          recipient: {
-            id: senderID
-          },
-          message: {
-            text: getReservatMessage(reservatorios[0])+". Deseja receber notificações desse reservatório?",
-            quick_replies: [{
-                "content_type": "text",
-                "title": "Sim",
-                "payload": 'REGISTER_PAYLOAD;' + reservatorios[0].id
-              },{
-                  "content_type": "text",
-                  "title": "Não",
-                  "payload": "NOT_REGISTER_PAYLOAD"
-                }
-            ]
-          }
-        };
-        callSendAPI(messageData);
+        sendReservatMessage(senderID, reservatorios[0]);
       });
     } else {
       var options = [];
@@ -219,6 +182,29 @@ function unregisterUser(recipientId) {
     sendTextMessage(recipientId, "Você não receberá atualizações a partir de agora.");
   });
   connection.end();
+}
+
+function sendReservatMessage(recipientId, reservat) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: getReservatMessage(reservat)+" Deseja receber notificações desse reservatório?",
+      quick_replies: [{
+          "content_type": "text",
+          "title": "Sim",
+          "payload": 'REGISTER_PAYLOAD;' + reservat.id
+        },{
+            "content_type": "text",
+            "title": "Não",
+            "payload": "NOT_REGISTER_PAYLOAD"
+          }
+      ]
+    }
+  };
+  callSendAPI(messageData);
+  return;
 }
 
 function sendTextMessage(recipientId, messageText) {
