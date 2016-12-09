@@ -45,10 +45,9 @@ http.createServer(function (req, res) {
           ctx.fillText('Última medição: 01/12/2016', x, (y += line))
           ctx.save()
 
-          var onda = new Canvas.Image;
-          onda.src = data_onda;
-          ctx.drawImage(onda, centerX - circleRadius, centerY,2*circleRadius, (2*circleRadius) + 10);
-
+          var img = new Canvas.Image; // Create a new Image
+          img.src = data;
+          ctx.drawImage(img, centerX - (img.width/2), padding+5, img.width, img.height);
 
           ctx.fillStyle = "rgba(0, 0, 200, 0)";;
           ctx.strokeStyle = '#FF0000'
@@ -59,6 +58,12 @@ http.createServer(function (req, res) {
           ctx.stroke()
           ctx.closePath()
           ctx.save()
+          ctx.clip()
+
+          var onda = new Canvas.Image;
+          var percent = 0.35;
+          onda.src = data_onda;
+          ctx.drawImage(onda, centerX - circleRadius, centerY + circleRadius - (percent*2*circleRadius) - 8,2*circleRadius, 2*circleRadius + 10);
 
 
 
@@ -68,10 +73,8 @@ http.createServer(function (req, res) {
           var width = ctx.measureText(text).width;
           ctx.fillText(text, centerX - (width/2), centerY + 15)
           ctx.save()
-          var img = new Canvas.Image; // Create a new Image
-          img.src = data;
 
-          ctx.drawImage(img, centerX - (img.width/2), padding+5, img.width, img.height);
+
 
           res.write('<html><body>');
           res.write('<img src="' + canvas.toDataURL() + '" />');
