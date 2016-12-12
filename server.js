@@ -10,7 +10,7 @@ var app = express();
 app.use(logger('short'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 var config = require('./server/config/config');
 require('./server/config/routes')(app,config);
