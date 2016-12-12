@@ -4,7 +4,8 @@ const
   request = require('request'),
   config = require('./../config/config'),
   mysql = require('mysql'),
-  schedule = require('node-schedule');
+  schedule = require('node-schedule'),
+  painter = require('./painter');
 
 exports.receivedMessage = function(event) {
   var
@@ -56,7 +57,7 @@ exports.receivedPostback = function(event) {
 }
 
 function getReservatMessage(reservat) {
-  if(reservat.volume){
+  if (reservat.volume) {
     return reservat.reservat + " está com " + reservat.volume+"hm³ (medido em " + reservat.data_informacao + "), que equivale à " + reservat.volume_percentual+"% da sua capacidade total de "+reservat.capacidade +"hm³.";
   }
   return reservat.reservat + " tem capacidade total de " + reservat.capacidade + "hm³. Atualmente não possuímos dados do volume.";
@@ -151,7 +152,8 @@ function processQuickReply(recipientId, quickReply) {
     case 'NOT_REGISTER_PAYLOAD':
       break;
     default:
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      sendImageMessage(recipientId, 'example.png');
+      // sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
   sendTypingOff(recipientId);
@@ -195,7 +197,7 @@ function sendReservatMessage(recipientId, reservat) {
       console.log(err);
       return;
     }
-    if(rows[0].is_registered){
+    if (rows[0].is_registered) {
       sendTextMessage(recipientId, getReservatMessage(reservat));
       return;
     }
@@ -263,6 +265,24 @@ function sendQuickReply(recipientId, messageText) {
           "payload": "HELP_PAYLOAD"
         }
       ]
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendImageMessage(recipientId, imageName) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: 'image',
+        payload: {
+          url: config.server_url+config.imgs_path+imageName
+        }
+      }
     }
   };
 

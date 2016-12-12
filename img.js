@@ -109,6 +109,9 @@ http.createServer(function (req, res) {
           ctx.stroke()
           ctx.closePath()
 
+          // fs.writeFile('out.png', canvas.toBuffer())
+          console.log( canvas.toBuffer() )
+
           res.write('<html><body>')
           res.write('<img src="' + canvas.toDataURL() + '" />')
           res.write('</body></html>')
