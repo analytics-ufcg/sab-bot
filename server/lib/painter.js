@@ -113,7 +113,7 @@ exports.draw = function(reservat, callback) {
       ctx.stroke()
       ctx.closePath()
 
-      fs.writeFile(config.tmp_path+'out.png', canvas.toBuffer(), callback)
+      fs.writeFile(config.public_path+'out.png', canvas.toBuffer(), callback)
     });
   });
 }
