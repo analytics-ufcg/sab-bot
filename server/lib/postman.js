@@ -285,7 +285,7 @@ function sendImageMessage(recipientId, imageName) {
       }
     }
   };
-
+  console.log(messageData.message);
   callSendAPI(messageData);
 }
 
