@@ -150,6 +150,7 @@ function processQuickReply(recipientId, quickReply) {
       registerUser(recipientId,payload[1]);
       break;
     case 'NOT_REGISTER_PAYLOAD':
+      sendTextMessage(recipientId, ";)")
       break;
     default:
       sendImageMessage(recipientId, 'example.png');
@@ -198,7 +199,8 @@ function sendReservatMessage(recipientId, reservat) {
       return;
     }
     if (rows[0].is_registered) {
-      sendTextMessage(recipientId, getReservatMessage(reservat));
+      // sendTextMessage(recipientId, getReservatMessage(reservat));
+      sendImageMessage(recipientId, 'example.png');
       return;
     }
     var messageData = {
@@ -206,16 +208,23 @@ function sendReservatMessage(recipientId, reservat) {
         id: recipientId
       },
       message: {
-        text: getReservatMessage(reservat)+" Deseja receber notificações desse reservatório?",
-        quick_replies: [{
+        attachment: {
+          type: 'image',
+          payload: {
+            url: config.server_url+config.public_path+imageName
+          }
+        }
+        quick_replies: [
+          {
             "content_type": "text",
-            "title": "Sim",
+            "title": "Receber atualizações",
             "payload": 'REGISTER_PAYLOAD;' + reservat.id
-          },{
-              "content_type": "text",
-              "title": "Não",
-              "payload": "NOT_REGISTER_PAYLOAD"
-            }
+          },
+          {
+            "content_type": "text",
+            "title": "Obrigado",
+            "payload": "NOT_REGISTER_PAYLOAD"
+          }
         ]
       }
     };
