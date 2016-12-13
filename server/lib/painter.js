@@ -23,10 +23,10 @@ exports.draw = function(reservat, callback) {
           circleCenterX = centerX + 60,
           circleCenterY = centerY,
           lineWidth = 120,
-          percent = 0.1,
+          percent = reservat.volume_percentual / 100,
           unit = ' hm³',
-          max = 1234 + unit,
-          volume = 25 + unit;
+          max = reservat.capacidade + unit,
+          volume = reservat.volume + unit;
 
       var canvas = new Canvas(width, height)
       var ctx = canvas.getContext('2d')
@@ -45,11 +45,11 @@ exports.draw = function(reservat, callback) {
 
       ctx.fillStyle = '#FFFFFF'
       ctx.font = '22px Arial'
-      ctx.fillText('Açude Epitácio Pessoa', x, y)
+      ctx.fillText(reservat.reservat, x, y)
       ctx.font = '20px Arial'
-      ctx.fillText('Boqueirão', x, (y += line))
+      ctx.fillText(reservat.municipio, x, (y += line))
       ctx.font = '16px Arial'
-      ctx.fillText('Última medição em 01/12/2016', x, (height - line))
+      ctx.fillText('Última medição em '+reservat.data_informacao, x, (height - line))
 
       var img = new Canvas.Image
       img.src = data
