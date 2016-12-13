@@ -2,7 +2,7 @@
 
 const
   fs = require('fs'),
-  canvas = require('canvas'),
+  Canvas = require('canvas'),
   config = require('./../config/config');
 
 exports.draw = function(reservat, callback) {
@@ -28,7 +28,7 @@ exports.draw = function(reservat, callback) {
           max = 1234 + unit,
           volume = 25 + unit;
 
-      var canvas = new canvas(width, height)
+      var canvas = new Canvas(width, height)
       var ctx = canvas.getContext('2d')
 
       ctx.fillStyle = '#6F7575'
