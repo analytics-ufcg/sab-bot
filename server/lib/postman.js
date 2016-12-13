@@ -199,37 +199,40 @@ function sendReservatMessage(recipientId, reservat) {
       return;
     }
     if (rows[0].is_registered) {
-      // sendTextMessage(recipientId, getReservatMessage(reservat));
-      sendImageMessage(recipientId, 'example.png');
+      painter.draw(reservat, function(imageName) {
+        sendImageMessage(recipientId, imageName);
+      });
       return;
     }
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: 'image',
-          payload: {
-            url: config.server_url+config.public_path+'example.png'
-          }
+    painter.draw(reservat, function(imageName) {
+      var messageData = {
+        recipient: {
+          id: recipientId
         },
-        quick_replies: [
-          {
-            "content_type": "text",
-            "title": "Receber atualizações",
-            "payload": 'REGISTER_PAYLOAD;' + reservat.id
+        message: {
+          attachment: {
+            type: 'image',
+            payload: {
+              url: config.server_url+config.public_path+imageName
+            }
           },
-          {
-            "content_type": "text",
-            "title": "Obrigado",
-            "payload": "NOT_REGISTER_PAYLOAD"
-          }
-        ]
-      }
-    };
-    callSendAPI(messageData);
-    return;
+          quick_replies: [
+            {
+              "content_type": "text",
+              "title": "Receber atualizações",
+              "payload": 'REGISTER_PAYLOAD;' + reservat.id
+            },
+            {
+              "content_type": "text",
+              "title": "Obrigado",
+              "payload": "NOT_REGISTER_PAYLOAD"
+            }
+          ]
+        }
+      };
+      callSendAPI(messageData);
+      return;
+    });
   });
   connection.end();
 
