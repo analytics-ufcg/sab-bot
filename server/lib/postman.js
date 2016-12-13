@@ -23,6 +23,9 @@ exports.receivedMessage = function(event) {
       getInfo(quickReplyPayload, function(reservatorios) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
+      }, function() {
+        sendTypingOff(senderID);
+        sendTextMessage(senderID, "Infelizmente não temos dados atualizados deste reservatório.");
       });
       return;
     }
@@ -74,6 +77,9 @@ function processText(senderID, message) {
       getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
+      }, function() {
+        sendTypingOff(senderID);
+        sendTextMessage(senderID, "Infelizmente não temos dados atualizados deste reservatório.");
       });
     } else if (length <= 10) {
       var options = [];
@@ -123,7 +129,7 @@ function getMatch(message, successCallback, errorCallback) {
   });
 }
 
-function getInfo(reservatID, callback) {
+function getInfo(reservatID, callback, nullCallback) {
   request({
       url: config.api + 'reservatorios/' + reservatID + '/info',
       json: true
@@ -131,8 +137,13 @@ function getInfo(reservatID, callback) {
       if (error || response.statusCode !== 200) {
         return;
       }
-      callback(body);
-      return;
+      if (body[0].volume) {
+        callback(body);
+        return;
+      } else {
+        nullCallback();
+        return;
+      }
   });
 }
 
