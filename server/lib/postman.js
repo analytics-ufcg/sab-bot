@@ -144,13 +144,13 @@ function processQuickReply(recipientId, quickReply) {
       sendTextMessage(recipientId, "Qual o nome do reservatório?");
       break;
     case 'SIGN_UP_PAYLOAD':
-      sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?")
+      sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?");
       break;
     case 'REGISTER_PAYLOAD':
       registerUser(recipientId,payload[1]);
       break;
     case 'NOT_REGISTER_PAYLOAD':
-      sendTextMessage(recipientId, ";)")
+      sendTextMessage(recipientId, ";)");
       break;
     default:
       sendImageMessage(recipientId, 'example.png');
@@ -213,7 +213,7 @@ function sendReservatMessage(recipientId, reservat) {
           payload: {
             url: config.server_url+config.public_path+imageName
           }
-        }
+        },
         quick_replies: [
           {
             "content_type": "text",
