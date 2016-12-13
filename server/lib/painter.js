@@ -51,7 +51,7 @@ exports.draw = function(reservat, callback) {
       ctx.font = '16px Arial'
       ctx.fillText('Última medição em 01/12/2016', x, (height - line))
 
-      var img = new canvas.Image
+      var img = new Canvas.Image
       img.src = data
       ctx.drawImage(img, centerX - (img.width/2), padding+5, img.width, img.height)
       ctx.save()
@@ -87,7 +87,7 @@ exports.draw = function(reservat, callback) {
       ctx.closePath()
       ctx.clip()
 
-      var onda = new canvas.Image
+      var onda = new Canvas.Image
       onda.src = data_onda
       ctx.drawImage(onda, circleCenterX - circleRadius, centerY + circleRadius - (percent*2*circleRadius) - 8, 2*circleRadius, 2*circleRadius + 20)
 
