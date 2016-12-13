@@ -45,7 +45,7 @@ exports.draw = function(reservat, callback) {
 
       var split = reservat.reservat.split("(");
 
-      var reservatName = "",
+      var reservatName = "";
       var reservatNickname = "";
       if (split.length > 1) {
         reservatName = split[0];
