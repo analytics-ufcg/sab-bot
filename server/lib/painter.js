@@ -16,7 +16,7 @@ exports.draw = function(reservat, callback) {
           padding = 10,
           x = padding*2,
           y = 130,
-          line = 30,
+          line = 25,
           centerX = width/2,
           centerY = (height/2) + 80,
           circleRadius = 80,
@@ -43,11 +43,22 @@ exports.draw = function(reservat, callback) {
       ctx.strokeStyle = '#6F7575'
       ctx.strokeRect(padding, padding, 380, 430)
 
+      var split = reservat.reservat.split("(");
+
+      var reservatName = "",
+      var reservatNickname = "";
+      if (split.length > 1) {
+        reservatName = split[0];
+        reservatNickname = split[1].substring(0, split[1].length-1);
+      } else {
+        reservatName = split[0];
+      }
+
       ctx.fillStyle = '#FFFFFF'
       ctx.font = '22px Arial'
-      ctx.fillText(reservat.reservat, x, y)
+      ctx.fillText(reservatName, x, y)
       ctx.font = '20px Arial'
-      ctx.fillText(reservat.municipio, x, (y += line))
+      ctx.fillText(reservatNickname, x, (y += line))
       ctx.font = '16px Arial'
       ctx.fillText('Última medição em '+reservat.data_informacao, x, (height - line))
 
