@@ -113,7 +113,7 @@ exports.draw = function(reservat, callback) {
       ctx.stroke()
       ctx.closePath()
 
-      var imageName = reservatId+".png"
+      var imageName = reservat.id+".png"
 
       fs.writeFile(config.public_path+imageName, canvas.toBuffer(), callback(imageName))
     });
