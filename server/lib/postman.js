@@ -280,7 +280,7 @@ function sendImageMessage(recipientId, imageName) {
       attachment: {
         type: 'image',
         payload: {
-          url: config.server_url+config.imgs_path+imageName
+          url: config.server_url+config.public_path+imageName
         }
       }
     }
