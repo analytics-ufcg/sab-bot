@@ -164,8 +164,7 @@ function processQuickReply(recipientId, quickReply) {
       sendTextMessage(recipientId, ";)");
       break;
     default:
-      sendImageMessage(recipientId, 'example.png');
-      // sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
       break;
   }
   sendTypingOff(recipientId);
