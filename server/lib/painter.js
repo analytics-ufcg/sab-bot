@@ -15,7 +15,7 @@ numeral.register('locale', 'pt-br', {
 numeral.locale('pt-br')
 
 function getCorSituacao(value) {
-  coresSituacao = ['#ff2222','#ff8f61','#d4d73b','#3381ff','#064cbf'];
+  var coresSituacao = ['#ff2222','#ff8f61','#d4d73b','#3381ff','#064cbf'];
   switch (true) {
     case value < 10:
       return coresSituacao[0]
@@ -171,5 +171,5 @@ exports.draw = function(reservat, callback) {
         });
       });
   });
-  
+
 }
