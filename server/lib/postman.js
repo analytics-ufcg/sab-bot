@@ -357,13 +357,15 @@ function callSendAPI(messageData) {
 
 function sendReportToAll(reservatId, recipients) {
   getInfo(reservatId, function(reservatorios) {
-    for (var j = 0; j < recipients.length; j++) {
-      sendTextMessage(recipients[j], getReservatMessage(reservatorios[0]));
-    }
+    painter.draw(reservatorios[0], function(imageName) {
+      for (var j = 0; j < recipients.length; j++) {
+        sendImageMessage(recipients[j], imageName);
+      }
+    });
   });
 }
 
-schedule.scheduleJob('0 0 10 * * ', function(){
+schedule.scheduleJob('0 0 13 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio where atualizacao_reservatorio = 1 group by id_reservatorio;', function(err, rows, fields) {
