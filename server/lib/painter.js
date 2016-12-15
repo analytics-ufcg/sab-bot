@@ -135,11 +135,11 @@ exports.draw = function(reservat, callback) {
             ctx.fillStyle = '#69aff4'
             ctx.font = '16px Oswald'
             var width = ctx.measureText(text).width
-            ctx.fillText(numeral(max).format('0,0.0')+unit, circleCenterX - lineWidth - width, circleCenterY-circleRadius-4)
+            ctx.fillText(numeral(+max).format('0,0.0')+unit, circleCenterX - lineWidth - width, circleCenterY-circleRadius-4)
 
 
             var width = ctx.measureText(text).width
-            ctx.fillText(numeral(volume).format('0,0.0')+unit, circleCenterX - lineWidth - width, circleCenterY + circleRadius - (percent*2*circleRadius)+20)
+            ctx.fillText(numeral(+volume).format('0,0.0')+unit, circleCenterX - lineWidth - width, circleCenterY + circleRadius - (percent*2*circleRadius)+20)
 
             ctx.beginPath()
             ctx.moveTo(circleCenterX, circleCenterY + circleRadius - (percent*2*circleRadius)+3)
