@@ -57,10 +57,10 @@ exports.draw = function(reservat, callback) {
                 circleCenterX = width - circleRadius - 40,
                 circleCenterY = height - circleRadius - headerHeight - 45,//y + (2*line) + circleRadius + 10,
                 lineWidth = 120,
-                percent = 0,
+                percent = reservat.volume_percentual / 100,
                 unit = ' hm³',
-                max = 100000,
-                volume = 0;
+                max = reservat.capacidade,
+                volume = reservat.volume;
 
             var canvas = new Canvas(width, height)
             var ctx = canvas.getContext('2d')
@@ -81,13 +81,24 @@ exports.draw = function(reservat, callback) {
             ctx.font = '16px Oswald'
             ctx.fillText('insa.gov.br/olhonagua', centerX + 45, height - (headerHeight /2) + 1)
 
+            var split = reservat.reservat.split("(");
+
+            var reservatName = "";
+            var reservatNickname = "";
+            if (split.length > 1) {
+              reservatName = split[0];
+              reservatNickname = split[1].substring(0, split[1].length-1);
+            } else {
+              reservatName = split[0];
+            }
+
             ctx.fillStyle = '#FFFFFF'
             ctx.font = '22px Oswald'
-            ctx.fillText('Açude Epitácio Pessoa', x, y)
+            ctx.fillText(reservatName, x, y)
             ctx.font = '20px Oswald'
-            ctx.fillText('Boqueirão', x, y + line)
+            ctx.fillText(reservatNickname, x, y + line)
             ctx.font = '16px Oswald'
-            ctx.fillText('Última medição: 01/12/2016', x, y + 2*line)
+            ctx.fillText('Última medição: '+reservat.data_informacao, x, y + 2*line)
 
             var img = new Canvas.Image
             img.src = data
