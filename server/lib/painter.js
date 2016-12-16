@@ -58,6 +58,7 @@ exports.draw = function(reservat, callback) {
                 circleCenterY = height - circleRadius - headerHeight - 45,//y + (2*line) + circleRadius + 10,
                 lineWidth = 120,
                 percent = reservat.volume_percentual / 100,
+                displayPercent = percent,
                 unit = ' hm³',
                 max = reservat.capacidade,
                 volume = reservat.volume;
@@ -65,6 +66,12 @@ exports.draw = function(reservat, callback) {
             var canvas = new Canvas(width, height)
             var ctx = canvas.getContext('2d')
 
+            if(percent >= 1){
+              percent = 1;
+            } else if (percent < 0.03){
+              percent = 0.03;
+            }
+            
             ctx.fillStyle = '#283c52'
             ctx.fillRect(0, 0, width, height)
 
@@ -162,7 +169,7 @@ exports.draw = function(reservat, callback) {
 
             ctx.fillStyle = corSituacao
             ctx.font = '32px Oswald'
-            var text = numeral(percent*100).format('0,0.0')+'%'
+            var text = numeral(displayPercent*100).format('0,0.0')+'%'
             var width = ctx.measureText(text).width
             ctx.fillText(text, circleCenterX - (width/2), circleCenterY + 15)
 

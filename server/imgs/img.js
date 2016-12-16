@@ -49,12 +49,19 @@ http.createServer(function (req, res) {
                   circleCenterY = height - circleRadius - headerHeight - 45,//y + (2*line) + circleRadius + 10,
                   lineWidth = 120,
                   percent = 0,
+                  displayPercent = percent,
                   unit = ' hm³',
                   max = 100000,
                   volume = 0;
 
               var canvas = new Canvas(width, height)
               var ctx = canvas.getContext('2d')
+
+              if(percent >= 1){
+                percent = 1;
+              } else if (percent < 0.03){
+                percent = 0.03;
+              }
 
               ctx.fillStyle = '#283c52'
               ctx.fillRect(0, 0, width, height)
@@ -142,7 +149,7 @@ http.createServer(function (req, res) {
 
               ctx.fillStyle = corSituacao
               ctx.font = '32px Oswald'
-              var text = numeral(percent*100).format('0,0.0')+'%'
+              var text = numeral(displayPercent*100).format('0,0.0')+'%'
               var width = ctx.measureText(text).width
               ctx.fillText(text, circleCenterX - (width/2), circleCenterY + 15)
 
