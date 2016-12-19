@@ -365,7 +365,7 @@ function sendReportToAll(reservatId, recipients) {
   });
 }
 
-schedule.scheduleJob('0 0 13 * * ', function(){
+schedule.scheduleJob('0 0 10 * * ', function(){
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio where atualizacao_reservatorio = 1 group by id_reservatorio;', function(err, rows, fields) {
