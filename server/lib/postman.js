@@ -162,7 +162,7 @@ function processQuickReply(recipientId, quickReply) {
       registerUser(recipientId, payload[1]);
       break;
     case 'NOT_REGISTER_PAYLOAD':
-      sendTextMessage(recipientId, ";)");
+      sendTextMessage(recipientId, lang.NOTHING_TO_SAY);
       break;
     default:
       sendTextMessage(recipientId, lang.HELP);

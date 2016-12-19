@@ -1,6 +1,7 @@
 module.exports = {
   INTRO: 'Como posso ajudá-lo?',
   HELP: 'Eu posso te dizer o volume atual dos reservatórios do semiárido brasileiro. Começe me dizendo o nome de um reservatório.',
+  NOTHING_TO_SAY: ';)',
   SERVER_ERROR: 'Estou indisponível no momento! :/',
   ASK_STATUS: 'Qual o nome do reservatório?',
   ASK_SIGN_UP: 'Qual reservatório você deseja receber atualizações diárias?',
