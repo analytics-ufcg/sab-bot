@@ -3,6 +3,7 @@
 const
   request = require('request'),
   config = require('./../config/config'),
+  lang = require('./../lang/pt-br'),
   mysql = require('mysql'),
   schedule = require('node-schedule'),
   painter = require('./painter');
@@ -25,7 +26,7 @@ exports.receivedMessage = function(event) {
         sendReservatMessage(senderID, reservatorios[0]);
       }, function() {
         sendTypingOff(senderID);
-        sendTextMessage(senderID, "Infelizmente não temos dados atualizados deste reservatório.");
+        sendTextMessage(senderID, lang.RESERVAT_DATA_NOT_FOUND);
       });
       return;
     }
@@ -45,16 +46,16 @@ exports.receivedPostback = function(event) {
 
   switch (payload) {
     case 'GET_STARTED_PAYLOAD':
-      sendQuickReply(senderID, "Como posso ajudá-lo?");
+      sendQuickReply(senderID, lang.INTRO);
       break;
     case 'STOP_NOTIFICATIONS_PAYLOAD':
       unregisterUser(senderID);
       break;
     case 'HELP_PAYLOAD':
-      sendTextMessage(senderID, "Ajuda tarda mas não falha.");
+      sendTextMessage(senderID, lang.HELP);
       break;
     default:
-      sendQuickReply(senderID, "Como posso ajudá-lo?");
+      sendQuickReply(senderID, lang.INTRO);
       break;
   }
 }
@@ -72,18 +73,18 @@ function processText(senderID, message) {
     var length = info.length;
     if (!length) {
       sendTypingOff(senderID);
-      sendQuickReply(senderID, "Não entendi. Seria isso?");
+      sendQuickReply(senderID, lang.RESERVAT_MATCH_NOT_FOUND);
     } else if (length === 1) {
       getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
       }, function() {
         sendTypingOff(senderID);
-        sendTextMessage(senderID, "Infelizmente não temos dados atualizados deste reservatório.");
+        sendTextMessage(senderID, lang.RESERVAT_DATA_NOT_FOUND);
       });
     } else if (length <= 10) {
       var options = [];
-      var optionsMessage = "Você quis dizer um desses?\n\n";
+      var optionsMessage = lang.RESERVAT_MATCH_FOUND;
       for (var i = 0; i < info.length; i++) {
         optionsMessage += i+1 + '. ' + info[i].reservat + " - " + info[i].uf + "\n";
         options.push({
@@ -105,11 +106,11 @@ function processText(senderID, message) {
       callSendAPI(messageData);
     } else {
       sendTypingOff(senderID);
-      sendTextMessage(senderID, "Encontrei muitos resultados, seja mais específico. 😥");
+      sendTextMessage(senderID, lang.RESERVAT_MATCH_TOO_LONG);
     }
     return;
   }, function error() {
-    sendTextMessage(senderID, "Estou indisponível no momento! :/");
+    sendTextMessage(senderID, lang.SERVER_ERROR);
     sendTypingOff(senderID);
     return;
   });
@@ -152,19 +153,19 @@ function processQuickReply(recipientId, quickReply) {
   var payload = quickReply.payload.split(";");
   switch (payload[0]) {
     case 'STATUS_PAYLOAD':
-      sendTextMessage(recipientId, "Qual o nome do reservatório?");
+      sendTextMessage(recipientId, lang.ASK_STATUS);
       break;
     case 'SIGN_UP_PAYLOAD':
-      sendTextMessage(recipientId, "Qual reservatório você deseja receber atualizações diárias?");
+      sendTextMessage(recipientId, lang.ASK_SIGN_UP);
       break;
     case 'REGISTER_PAYLOAD':
-      registerUser(recipientId,payload[1]);
+      registerUser(recipientId, payload[1]);
       break;
     case 'NOT_REGISTER_PAYLOAD':
       sendTextMessage(recipientId, ";)");
       break;
     default:
-      sendTextMessage(recipientId, "Ajuda tarda mas não falha.");
+      sendTextMessage(recipientId, lang.HELP);
       break;
   }
   sendTypingOff(recipientId);
@@ -176,13 +177,13 @@ function registerUser(recipientId, reservatId) {
   connection.query('INSERT INTO tb_user_reservatorio (id_user,id_reservatorio) VALUES('+recipientId+','+reservatId+');', function(err, rows, fields) {
     if (err) {
       if (err.errno == 1062) {
-        sendTextMessage(recipientId, "Você já está cadastrado nesse reservatório.");
+        sendTextMessage(recipientId, lang.RESERVAT_ALREADY_SIGNED);
         return;
       }
       console.log(err);
       return;
     }
-    sendTextMessage(recipientId, "Você receberá atualizações desse reservatório.");
+    sendTextMessage(recipientId, lang.RESERVAT_SIGN_UP);
   });
   connection.end();
 }
@@ -195,7 +196,7 @@ function unregisterUser(recipientId) {
       console.log(err);
       return;
     }
-    sendTextMessage(recipientId, "Você não receberá atualizações a partir de agora.");
+    sendTextMessage(recipientId, lang.RESERVAT_DELETE_NOTIFICATIONS);
   });
   connection.end();
 }
