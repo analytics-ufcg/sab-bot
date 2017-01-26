@@ -148,6 +148,18 @@ function getInfo(reservatID, callback, nullCallback) {
   });
 }
 
+function getAllInfo(callback) {
+  request({
+      url: config.api + 'reservatorios/info',
+      json: true
+  }, function (error, response, body) {
+      if (error || response.statusCode !== 200) {
+        return;
+      }
+      callback(body);
+  });
+}
+
 function processQuickReply(recipientId, quickReply) {
   sendTypingOn(recipientId);
   var payload = quickReply.payload.split(";");
@@ -365,7 +377,7 @@ function sendReportToAll(reservatId, recipients) {
   });
 }
 
-schedule.scheduleJob('0 0 10 * * ', function(){
+schedule.scheduleJob('0 0 10 * * ', function() {
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio where atualizacao_reservatorio = 1 group by id_reservatorio;', function(err, rows, fields) {
@@ -380,4 +392,14 @@ schedule.scheduleJob('0 0 10 * * ', function(){
       }
     });
     connection.end();
+});
+
+schedule.scheduleJob('*/2 * * * * ', function() {
+  getAllInfo(function(reservatorios) {
+    reservatorios.forEach(function(reservat) {
+      painter.draw(reservat, function(imageName) {
+        console.log(imageName + " salva!");
+      });
+    });
+  });
 });
