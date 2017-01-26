@@ -368,13 +368,9 @@ function callSendAPI(messageData) {
 }
 
 function sendReportToAll(reservatId, recipients) {
-  getInfo(reservatId, function(reservatorios) {
-    painter.draw(reservatorios[0], function(imageName) {
-      for (var j = 0; j < recipients.length; j++) {
-        sendImageMessage(recipients[j], imageName);
-      }
-    });
-  });
+  for (var j = 0; j < recipients.length; j++) {
+    sendImageMessage(recipients[j], reservatId + ".png");
+  }
 }
 
 schedule.scheduleJob('0 0 10 * * ', function() {
