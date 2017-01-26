@@ -394,11 +394,10 @@ schedule.scheduleJob('0 0 10 * * ', function() {
     connection.end();
 });
 
-schedule.scheduleJob('*/2 * * * * ', function() {
+schedule.scheduleJob('0 0 8 * * ', function() {
   getAllInfo(function(reservatorios) {
     reservatorios.forEach(function(reservat) {
       painter.draw(reservat, function(imageName) {
-        console.log(imageName + " salva!");
       });
     });
   });
