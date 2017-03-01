@@ -35,18 +35,18 @@ http.createServer(function (req, res) {
             if(err) throw err;
 
               var
-                  width = 448,
-                  height = 560,
+                  height = 448,
+                  width = 560,
                   padding = 10,
-                  x = padding*2 + 10,
-                  y = 140,
+                  x = padding*2,
+                  y = 115,
                   line = 27,
                   headerHeight = 85,
                   centerX = width/2,
                   centerY = (height/2) + 80,
                   circleRadius = 85,
-                  circleCenterX = width - circleRadius - 40,
-                  circleCenterY = height - circleRadius - headerHeight - 45,//y + (2*line) + circleRadius + 10,
+                  circleCenterX = width - circleRadius - 130,
+                  circleCenterY = height - circleRadius - headerHeight + 25,//y + (2*line) + circleRadius + 10,
                   lineWidth = 120,
                   percent = 0,
                   displayPercent = percent,
@@ -69,35 +69,30 @@ http.createServer(function (req, res) {
               ctx.fillStyle = '#FFFFFF'
               ctx.fillRect(0, 0, width, headerHeight)
 
-              ctx.fillStyle = '#9d9d9c'
-              ctx.fillRect(0, height-headerHeight, width, headerHeight)
-
               ctx.strokeStyle = '#4a72b2'
               ctx.strokeRect(padding, padding, width -20, height - 20)
 
-              ctx.fillStyle = '#283c52'
+              ctx.fillStyle = '#FFFFFF'
               ctx.font = '16px Oswald'
-              ctx.fillText('insa.gov.br/olhonagua', centerX + 45, height - (headerHeight /2) + 1)
+              ctx.fillText('insa.gov.br/olhonagua', centerX + 120, height - headerHeight/2 + 15)
 
               ctx.fillStyle = '#FFFFFF'
-              ctx.font = '22px Oswald'
-              ctx.fillText('Açude Epitácio Pessoa', x, y)
               ctx.font = '20px Oswald'
-              ctx.fillText('Boqueirão', x, y + line)
-              ctx.font = '16px Oswald'
-              ctx.fillText('Última medição: 01/12/2016', x, y + 2*line)
+              ctx.fillText('Açude Epitácio Pessoa (Boqueirão)', x, y + 5)
+              ctx.font = '14px Oswald'
+              ctx.fillText('Última medição: 01/12/2016', x, y + line + 5)
 
               var img = new Canvas.Image
               img.src = data
-              ctx.drawImage(img, centerX - (img.width/2), padding+5, img.width *0.85, img.height * 0.85)
+              ctx.drawImage(img,padding + 10, padding+5, img.width *0.75, img.height * 0.75)
               ctx.save()
 
               img.src = data_insa
-              ctx.drawImage(img, x,  height - (headerHeight /2) - 20, img.width *0.05, img.height * 0.05)
+              ctx.drawImage(img, centerX + 120,  (headerHeight /2) - 10, img.width *0.05, img.height * 0.05)
               ctx.save()
 
               img.src = data_ufcg
-              ctx.drawImage(img, centerX - 60,  height - (headerHeight /2) - 30, img.width * 0.58, img.height * 0.58)
+              ctx.drawImage(img, centerX + 210,  (headerHeight /2) - 20, img.width * 0.58, img.height * 0.58)
               ctx.save()
 
               var corSituacao = getCorSituacao(100*percent);
