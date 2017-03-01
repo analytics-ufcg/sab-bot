@@ -7,6 +7,7 @@ module.exports = {
   ASK_SIGN_UP: 'Qual reservatório você deseja receber atualizações diárias?',
   RESERVAT_MATCH_FOUND: 'Você quis dizer um desses?\n\n',
   RESERVAT_MATCH_NOT_FOUND: 'Não entendi. Seria isso?',
+  RESERVAT_MATCH_IS_MESSAGE: 'Querendo falar com o INSA? Envie sua mensagem para o nosso canal do Facebook (m.me/InsaMcti) ou envie um e-mail para insa@insa.gov.br',
   RESERVAT_MATCH_TOO_LONG: 'Encontrei muitos resultados, seja mais específico. 😥',
   RESERVAT_DATA_NOT_FOUND: 'Infelizmente não temos dados atualizados deste reservatório.',
   RESERVAT_SIGN_UP: 'Você receberá atualizações desse reservatório.',

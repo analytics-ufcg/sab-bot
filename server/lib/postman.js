@@ -73,7 +73,11 @@ function processText(senderID, message) {
     var length = info.length;
     if (!length) {
       sendTypingOff(senderID);
-      sendQuickReply(senderID, lang.RESERVAT_MATCH_NOT_FOUND);
+      if (message.split(' ').length > 3) {
+        sendTextMessage(senderID, lang.RESERVAT_MATCH_IS_MESSAGE);
+      } else {
+        sendQuickReply(senderID, lang.RESERVAT_MATCH_NOT_FOUND);
+      }
     } else if (length === 1) {
       getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
