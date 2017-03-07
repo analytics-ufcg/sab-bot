@@ -205,17 +205,17 @@ exports.drawShareable = function(reservat, callback) {
           if (err) throw err;
 
             var
-                height = 448,
-                width = 560,
+                height = 368,
+                width = 700,
                 padding = 10,
-                x = padding*2,
+                x = padding*6,
                 y = 115,
                 line = 27,
                 headerHeight = 85,
-                centerX = width/2,
+                centerX = width/2 + 30,
                 centerY = (height/2) + 80,
-                circleRadius = 85,
-                circleCenterX = width - circleRadius - 130,
+                circleRadius = 65,
+                circleCenterX = width - circleRadius - 60,
                 circleCenterY = height - circleRadius - headerHeight + 25,//y + (2*line) + circleRadius + 10,
                 lineWidth = 120,
                 percent = reservat.volume_percentual / 100,
@@ -244,7 +244,7 @@ exports.drawShareable = function(reservat, callback) {
 
             ctx.fillStyle = '#FFFFFF'
             ctx.font = '16px Oswald'
-            ctx.fillText('insa.gov.br/olhonagua', centerX + 120, height - headerHeight/2 + 15)
+            ctx.fillText('insa.gov.br/olhonagua', x, height - headerHeight/2 + 15)
 
             var reservatName = reservat.reservat;
 
@@ -256,7 +256,7 @@ exports.drawShareable = function(reservat, callback) {
 
             var img = new Canvas.Image
             img.src = data
-            ctx.drawImage(img,padding + 10, padding+5, img.width *0.75, img.height * 0.75)
+            ctx.drawImage(img,x, padding+5, img.width *0.75, img.height * 0.75)
             ctx.save()
 
             img.src = data_insa
