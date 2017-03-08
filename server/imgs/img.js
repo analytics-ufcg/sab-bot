@@ -80,7 +80,7 @@ http.createServer(function (req, res) {
               ctx.font = '20px Oswald'
               ctx.fillText('Açude Epitácio Pessoa (Boqueirão)', x, y + 5)
               ctx.font = '14px Oswald'
-              ctx.fillText('Última medição: 01/12/2016', x, y + line + 5)
+              ctx.fillText('Última atualização: 01/12/2016', x, y + line + 5)
 
               var img = new Canvas.Image
               img.src = data
