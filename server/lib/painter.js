@@ -66,9 +66,9 @@ exports.draw = function(reservat, callback) {
             var canvas = new Canvas(width, height)
             var ctx = canvas.getContext('2d')
 
-            if(percent >= 1){
+            if (percent >= 1) {
               percent = 1;
-            } else if (percent < 0.03){
+            } else if (percent < 0.03) {
               percent = 0.03;
             }
 

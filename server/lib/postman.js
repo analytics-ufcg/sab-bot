@@ -6,7 +6,8 @@ const
   lang = require('./../lang/pt-br'),
   mysql = require('mysql'),
   schedule = require('node-schedule'),
-  painter = require('./painter');
+  painter = require('./painter'),
+  resource = require('./resource');
 
 exports.receivedMessage = function(event) {
   var
@@ -21,7 +22,7 @@ exports.receivedMessage = function(event) {
     var quickReplyPayload = message.quick_reply.payload;
     if (!isNaN(quickReplyPayload)) {
       sendTypingOn(senderID);
-      getInfo(quickReplyPayload, function(reservatorios) {
+      resource.getInfo(quickReplyPayload, function(reservatorios) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
       }, function() {
@@ -69,7 +70,7 @@ function getReservatMessage(reservat) {
 
 function processText(senderID, message) {
   sendTypingOn(senderID);
-  getMatch(message, function success(info) {
+  resource.getMatch(message, function success(info) {
     var length = info.length;
     if (!length) {
       sendTypingOff(senderID);
@@ -79,7 +80,7 @@ function processText(senderID, message) {
         sendQuickReply(senderID, lang.RESERVAT_MATCH_NOT_FOUND);
       }
     } else if (length === 1) {
-      getInfo(info[0].id, function(reservatorios) {
+      resource.getInfo(info[0].id, function(reservatorios) {
         sendTypingOff(senderID);
         sendReservatMessage(senderID, reservatorios[0]);
       }, function() {
@@ -117,50 +118,6 @@ function processText(senderID, message) {
     sendTextMessage(senderID, lang.SERVER_ERROR);
     sendTypingOff(senderID);
     return;
-  });
-}
-
-function getMatch(message, successCallback, errorCallback) {
-  request({
-    url: config.api + 'reservatorios/similares/' + message.text + '/70',
-    json: true
-  },function(error, response, body) {
-    if (error || response.statusCode !== 200) {
-      errorCallback();
-      return;
-    }
-    successCallback(body);
-    return;
-  });
-}
-
-function getInfo(reservatID, callback, nullCallback) {
-  request({
-      url: config.api + 'reservatorios/' + reservatID + '/info',
-      json: true
-  }, function (error, response, body) {
-      if (error || response.statusCode !== 200) {
-        return;
-      }
-      if (body[0].volume) {
-        callback(body);
-        return;
-      } else {
-        nullCallback();
-        return;
-      }
-  });
-}
-
-function getAllInfo(callback) {
-  request({
-      url: config.api + 'reservatorios/info',
-      json: true
-  }, function (error, response, body) {
-      if (error || response.statusCode !== 200) {
-        return;
-      }
-      callback(body);
   });
 }
 
@@ -377,7 +334,7 @@ function sendReportToAll(reservatId, recipients) {
   }
 }
 
-schedule.scheduleJob('0 0 10 * * ', function() {
+schedule.scheduleJob('0 0 7 * * ', function() {
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio where atualizacao_reservatorio = 1 group by id_reservatorio;', function(err, rows, fields) {
@@ -392,13 +349,4 @@ schedule.scheduleJob('0 0 10 * * ', function() {
       }
     });
     connection.end();
-});
-
-schedule.scheduleJob('0 0 8 * * ', function() {
-  getAllInfo(function(reservatorios) {
-    reservatorios.forEach(function(reservat) {
-      painter.draw(reservat, function(imageName) {});
-      painter.drawShareable(reservat, function(imageName) {});
-    });
-  });
 });
