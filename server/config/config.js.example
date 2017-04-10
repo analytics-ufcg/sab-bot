@@ -2,8 +2,8 @@ module.exports = {
   server_url: 'https://localhost/facebot/',
   port: process.env.PORT || 5002,
   api: 'http://pathtoapi.com.br/',
-  imgs_path: 'server/imgs/',
-  public_path: 'public',
+  imgs_path: '/path/a/partir/do/root/',
+  public_path: '/path/a/partir/do/root/',
   fb : {
     validation_token : 'validation-token',
     access_token : 'FACEBOOKVALIDATIONTOKEN'

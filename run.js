@@ -7,8 +7,7 @@ const
 console.log("Iniciando criação de imagens...");
 resource.getAllInfo(function(reservatorios) {
   reservatorios.forEach(function(reservat) {
-    painter.draw(reservat, function(imageName) { });
+    painter.draw(reservat, function(imageName) {});
     painter.drawShareable(reservat, function(imageName) {});
   });
-  console.log("Criação de imagens concluída.");
 });
