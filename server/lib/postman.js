@@ -74,7 +74,7 @@ function processText(senderID, message) {
     var length = info.length;
     if (!length) {
       sendTypingOff(senderID);
-      if (message.text.split(' ').length > 3) {
+      if (message.text !== 'undefined' && message.text.split(' ').length > 3) {
         sendTextMessage(senderID, lang.RESERVAT_MATCH_IS_MESSAGE);
       } else {
         sendQuickReply(senderID, lang.RESERVAT_MATCH_NOT_FOUND);
