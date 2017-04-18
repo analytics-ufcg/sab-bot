@@ -5,7 +5,7 @@ var
   config = require('./../config/config');
 
 exports.getMatch = function(message, successCallback, errorCallback) {
-  var str = message.text.replace("?", "");
+  var str = message.text.replace(/\?/g, "");
   request({
     url: config.api + 'reservatorios/similares/' + str + '/70',
     json: true
