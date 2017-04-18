@@ -1,5 +1,6 @@
 module.exports = {
   server_url: 'https://localhost/facebot/',
+  imgs_url: 'https://olhonagua.lsd.ufcg.edu.br/public/',
   port: process.env.PORT || 5002,
   api: 'http://pathtoapi.com.br/',
   imgs_path: '/path/a/partir/do/root/',

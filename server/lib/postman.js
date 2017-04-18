@@ -197,7 +197,7 @@ function sendReservatMessage(recipientId, reservat) {
           attachment: {
             type: 'image',
             payload: {
-              url: config.server_url+config.public_path+imageName
+              url: config.imgs_url+imageName
             }
           },
           quick_replies: [
@@ -276,7 +276,7 @@ function sendImageMessage(recipientId, imageName) {
       attachment: {
         type: 'image',
         payload: {
-          url: config.server_url+config.public_path+imageName
+          url: config.imgs_url+imageName
         }
       }
     }
