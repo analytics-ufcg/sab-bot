@@ -357,7 +357,7 @@ schedule.scheduleJob('*/8 7-22 * * *', function() {
           console.log(error);
           return;
         }
+        connection.end();
       });
     });
-    connection.end();
 });
