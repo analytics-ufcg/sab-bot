@@ -353,8 +353,8 @@ schedule.scheduleJob('*/8 7-22 * * *', function() {
         sendReportToAll(reservatId, users);
       }
       connection.query('UPDATE tb_user_reservatorio SET atualizacao_reservatorio = 0;', function(error, results, fields) {
-        if (err) {
-          console.log(err);
+        if (error) {
+          console.log(error);
           return;
         }
       });
