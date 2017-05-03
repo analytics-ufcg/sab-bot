@@ -357,7 +357,6 @@ schedule.scheduleJob('*/30 7-22 * * *', function() {
           console.log(err);
           return;
         }
-        console.log('Resetados ' + results.changedRows + ' reservatórios');
       });
     });
     connection.end();
