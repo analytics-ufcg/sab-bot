@@ -339,10 +339,10 @@ function sendReportToAll(reservatId, recipients) {
   }
 }
 
-schedule.scheduleJob('0 0 7 * * ', function() {
+schedule.scheduleJob('*/30 7-22 * * *', function() {
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
-    connection.query('select id_reservatorio, group_concat(id_user) as users from tb_user_reservatorio where atualizacao_reservatorio = 1 group by id_reservatorio;', function(err, rows, fields) {
+    connection.query('SELECT id_reservatorio, group_concat(id_user) AS users FROM tb_user_reservatorio WHERE atualizacao_reservatorio = 1 GROUP BY id_reservatorio;', function(err, rows, fields) {
       if (err) {
         console.log(err);
         return;
@@ -352,6 +352,13 @@ schedule.scheduleJob('0 0 7 * * ', function() {
         var users = rows[i].users.split(",");
         sendReportToAll(reservatId, users);
       }
+      connection.query('UPDATE tb_user_reservatorio SET atualizacao_reservatorio = 0;', function(error, results, fields) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('Resetados ' + results.changedRows + ' reservatórios');
+      });
     });
     connection.end();
 });
