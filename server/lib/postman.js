@@ -339,7 +339,7 @@ function sendReportToAll(reservatId, recipients) {
   }
 }
 
-schedule.scheduleJob('*/30 7-22 * * *', function() {
+schedule.scheduleJob('*/8 7-22 * * *', function() {
     var connection = mysql.createConnection(config.db_config);
     connection.connect();
     connection.query('SELECT id_reservatorio, group_concat(id_user) AS users FROM tb_user_reservatorio WHERE atualizacao_reservatorio = 1 GROUP BY id_reservatorio;', function(err, rows, fields) {
