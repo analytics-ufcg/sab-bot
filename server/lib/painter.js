@@ -103,9 +103,10 @@ exports.draw = function(reservat, callback) {
             ctx.font = '22px Oswald'
             ctx.fillText(reservatName, x, y)
             ctx.font = '20px Oswald'
-            ctx.fillText(reservatNickname, x, y + line)
+            ctx.fillText(reservatNickname, x, y + (0.9*line))
             ctx.font = '16px Oswald'
             ctx.fillText('Última atualização: '+reservat.data_informacao, x, y + 2*line)
+            ctx.fillText('Fonte: '+reservat.fonte,  x, y + (2.9*line))
 
             var img = new Canvas.Image
             img.src = data
@@ -253,6 +254,7 @@ exports.drawShareable = function(reservat, callback) {
             ctx.fillText(reservatName, x, y + 5)
             ctx.font = '14px Oswald'
             ctx.fillText('Última atualização: '+reservat.data_informacao,  x, y + line + 5)
+            ctx.fillText('Fonte: '+reservat.fonte,  x, y + (line * 2) + 5)
 
             var img = new Canvas.Image
             img.src = data
